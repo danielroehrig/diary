@@ -11,5 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Daniel Röhrig",
-  "license": "agpl"
+  "license": "agpl",
+  "dependencies": {
+    "vue": "^2.6.14"
+  }
 }
