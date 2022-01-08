@@ -1,9 +1,10 @@
 <?php
-script('diary', 'script');
+script('diary', 'diary');
 style('diary', 'style');
 ?>
 
-<div id="app">
-	{{ message }}
+<div id="content">
+	This is message {{ message }}
 </div>
+yada
 

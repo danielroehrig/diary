@@ -8,6 +8,10 @@
     "test": "tests"
   },
   "scripts": {
+    "build": "webpack --node-env production --progress",
+    "dev": "webpack --node-env development --progress",
+    "watch": "webpack --node-env development --progress --watch",
+    "serve": "webpack --node-env development serve --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Daniel Röhrig",
