@@ -5,6 +5,7 @@ use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
+use OCP\Util;
 
 class PageController extends Controller {
 	private $userId;
@@ -25,6 +26,7 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index() {
+        Util::addScript($this->appName, 'diary-main');
 		return new TemplateResponse('diary', 'index');  // templates/index.php
 	}
 

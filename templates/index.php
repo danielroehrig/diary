@@ -1,10 +1,7 @@
-<?php
-script('diary', 'diary');
-style('diary', 'style');
-?>
 
-<div id="content">
-	This is message {{ message }}
+<div id="vue-content">
+This is message {{ message }}
+<p>Here is more text</p>
+<todo-item>test</todo-item>
+
 </div>
-yada
-

@@ -1,9 +1,3 @@
-const path = require('path');
+const webpackConfig = require('@nextcloud/webpack-vue-config')
 
-module.exports = {
-    entry: './js/script.js',
-    output: {
-        path: path.resolve(__dirname, 'js'),
-        filename: 'diary.js'
-    }
-}
+module.exports = webpackConfig
