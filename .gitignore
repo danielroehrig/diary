@@ -1,2 +1,5 @@
 vendor
 node_modules
+js/*.js
+js/*.txt
+js/*.map
