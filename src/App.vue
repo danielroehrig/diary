@@ -7,13 +7,16 @@
 			</template>
 		</AppNavigation>
 		<AppContent>
-			Well well well
+			<div class="editor">
+				<textarea />
+			</div>
 		</AppContent>
 	</Content>
 </template>
 
 <script>
 import { Content, AppNavigation, AppNavigationNew, AppContent } from '@nextcloud/vue'
+import EasyMDE from 'easymde'
 export default {
 	name: 'App',
 	components: {
@@ -25,7 +28,11 @@ export default {
 	data() {
 		return {
 			loading: false,
+			editor: null,
 		}
+	},
+	mounted() {
+		this.editor = new EasyMDE()
 	},
 }
 </script>
