@@ -17,6 +17,7 @@
   "author": "Daniel Röhrig",
   "license": "agpl",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "@nextcloud/vue": "^4.3.0",
     "easymde": "^2.15.0",
     "vue": "^2.6.14"
