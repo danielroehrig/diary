@@ -8,6 +8,8 @@
 <script>
 import { AppContent } from '@nextcloud/vue'
 import EasyMDE from 'easymde'
+import axios from '@nextcloud/axios'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
 	name: 'Editor',
@@ -27,6 +29,23 @@ export default {
 			forceSync: true,
 			spellChecker: false,
 			nativeSpellcheck: false,
+		})
+		this.editor.codemirror.on('change', () => {
+			const newContent = this.editor.value()
+			const payload = {
+				content: newContent,
+			}
+			// eslint-disable-next-line no-console
+			console.log(newContent)
+			axios.put(generateUrl('apps/diary/entry'), payload)
+				.then(response => {
+					// eslint-disable-next-line no-console
+					console.log(response)
+				})
+				.catch(error => {
+					// eslint-disable-next-line no-console
+					console.log(error)
+				})
 		})
 	},
 }
