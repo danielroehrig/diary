@@ -3,7 +3,6 @@ namespace OCA\Diary\Controller;
 
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 use OCP\Util;
 
@@ -29,5 +28,15 @@ class PageController extends Controller {
         Util::addScript($this->appName, 'diary-main');
 		return new TemplateResponse('diary', 'index');  // templates/index.php
 	}
+
+    /**
+     * @param string $content
+     * @return string[]
+     * @NoAdminRequired
+     */
+    public function updateEntry(string $content): array {
+        return ['content'=>$content.'yada'];
+    }
+
 
 }
