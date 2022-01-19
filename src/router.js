@@ -11,15 +11,19 @@ export default new VueRouter({
 	base: generateUrl('apps/diary'),
 	routes: [
 		{
-			path: '/',
-			redirect: to => {
-				return '/date/' + moment().format('YYYY-MM-DD')
-			},
-		},
-		{
 			path: '/date/:date',
 			name: 'date',
+			props: true,
 			component: Editor,
+		},
+		{
+			path: '/',
+			redirect: {
+				name: 'date',
+				params: {
+					date: moment().format('YYYY-MM-DD'),
+				},
+			},
 		},
 	],
 })

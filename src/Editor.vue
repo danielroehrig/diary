@@ -1,7 +1,7 @@
 <template>
 	<AppContent>
 		<div id="title">
-			{{ today }}
+			{{ date }}
 		</div>
 		<div class="editor">
 			<textarea id="diary-editor" />
@@ -19,15 +19,16 @@ export default {
 	components: {
 		AppContent,
 	},
+	props: {
+		date: {
+			type: String,
+			required: true,
+		},
+	},
 	data() {
 		return {
 			editor: null,
 		}
-	},
-	computed: {
-		today() {
-			return this.$route.params.date
-		},
 	},
 	mounted() {
 		this.editor = new EasyMDE({
@@ -45,7 +46,7 @@ export default {
 			}
 			// eslint-disable-next-line no-console
 			console.log(newContent)
-			axios.put(generateUrl('apps/diary/entry/' + this.$route.params.date), payload)
+			axios.put(generateUrl('apps/diary/entry/' + this.date), payload)
 				.then(response => {
 					// eslint-disable-next-line no-console
 					console.log(response)
