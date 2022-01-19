@@ -1,7 +1,7 @@
 <template>
 	<Content :class="{'icon-loading': loading}" app-name="diary">
-		<router-view />
 		<AppNavigation />
+		<router-view />
 	</Content>
 </template>
 

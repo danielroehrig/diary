@@ -1,5 +1,8 @@
 <template>
 	<AppContent>
+		<div id="title">
+			{{ today }}
+		</div>
 		<div class="editor">
 			<textarea id="diary-editor" />
 		</div>
@@ -20,6 +23,11 @@ export default {
 		return {
 			editor: null,
 		}
+	},
+	computed: {
+		today() {
+			return this.$route.params.date
+		},
 	},
 	mounted() {
 		this.editor = new EasyMDE({
