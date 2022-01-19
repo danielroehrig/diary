@@ -30,12 +30,13 @@ class PageController extends Controller {
 	}
 
     /**
-     * @param string $content
+     * @param string $date ISO date as identifier
+     * @param string $content Diary entry to save
      * @return string[]
      * @NoAdminRequired
      */
-    public function updateEntry(string $content): array {
-        return ['content'=>$content.'yada'];
+    public function updateEntry(string $date, string $content): array {
+        return ['content'=>$content.'yada'.$date];
     }
 
 

@@ -45,7 +45,7 @@ export default {
 			}
 			// eslint-disable-next-line no-console
 			console.log(newContent)
-			axios.put(generateUrl('apps/diary/entry'), payload)
+			axios.put(generateUrl('apps/diary/entry/' + this.$route.params.date), payload)
 				.then(response => {
 					// eslint-disable-next-line no-console
 					console.log(response)
