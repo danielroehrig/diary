@@ -1,18 +1,12 @@
 <template>
-	<Content :class="{'icon-loading': loading}" app-name="diary">
-		<AppNavigation />
-		<router-view />
-	</Content>
+	<router-view />
 </template>
 
 <script>
-import { AppNavigation, Content } from '@nextcloud/vue'
 
 export default {
 	name: 'App',
 	components: {
-		Content,
-		AppNavigation,
 	},
 	data() {
 		return {

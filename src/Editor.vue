@@ -1,15 +1,14 @@
 <template>
-	<AppContent>
+	<div>
 		<div id="title">
-			{{ date }}
+			{{ date }}hello
 		</div>
 		<div class="editor">
 			<textarea id="diary-editor" />
 		</div>
-	</AppContent>
+	</div>
 </template>
 <script>
-import { AppContent } from '@nextcloud/vue'
 import EasyMDE from 'easymde'
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
@@ -17,7 +16,6 @@ import { generateUrl } from '@nextcloud/router'
 export default {
 	name: 'Editor',
 	components: {
-		AppContent,
 	},
 	props: {
 		date: {
