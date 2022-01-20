@@ -46,6 +46,7 @@ export default {
 			}
 			// eslint-disable-next-line no-console
 			console.log(newContent)
+			// Send content to backend
 			axios.put(generateUrl('apps/diary/entry/' + this.date), payload)
 				.then(response => {
 					// eslint-disable-next-line no-console
