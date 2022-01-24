@@ -1,7 +1,14 @@
 <template>
 	<Content app-name="diary">
 		<AppNavigation>
-			<DatetimePicker v-model="selectedDate" type="date" @change="onDateChange" />
+			<button>Left</button>
+			<DatetimePicker
+				v-model="selectedDate"
+				class="diary-datetimepicker"
+				type="date"
+				open="open"
+				@change="onDateChange" />
+			<button>Right</button>
 		</AppNavigation>
 		<AppContent>
 			<Editor :date="date" />

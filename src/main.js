@@ -1,3 +1,5 @@
+import '../css/diary.scss'
+
 import Vue from 'vue'
 import App from './App'
 import router from './router'
