@@ -2,11 +2,14 @@
 	<Content app-name="diary">
 		<AppNavigation>
 			<button>Left</button>
+			<button @click="openCalendar">
+				Open
+			</button>
 			<DatetimePicker
 				v-model="selectedDate"
 				class="diary-datetimepicker"
 				type="date"
-				open="open"
+				:open="calendarOpen"
 				@change="onDateChange" />
 			<button>Right</button>
 		</AppNavigation>
@@ -31,12 +34,16 @@ export default {
 	data() {
 		return {
 			selectedDate: null,
+			calendarOpen: false,
 		}
 	},
 	methods: {
 		onDateChange(date) {
 			// eslint-disable-next-line no-console
 			console.log(date)
+		},
+		openCalendar() {
+			this.calendarOpen = !this.calendarOpen
 		},
 	},
 }
