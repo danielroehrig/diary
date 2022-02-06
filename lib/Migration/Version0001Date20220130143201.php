@@ -21,10 +21,11 @@ class Version0001Date20220130143201 extends SimpleMigrationStep
 
         if(!$schema->hasTable('diary')){
             $table = $schema->createTable('diary');
+            $table->addColumn('id','string', ['length'=>74, 'notnull'=>true]);
             $table->addColumn('uid','string', ['length'=>64]);
             $table->addColumn('entry_date','string', ['length'=>10]);
             $table->addColumn('entry_content','text', ['notnull'=>false]);
-            $table->setPrimaryKey(['uid', 'entry_date'],'diary_user_id_date');
+            $table->setPrimaryKey(['id'],'diary_user_id_date');
             $table->addForeignKeyConstraint('users',['uid'], ['uid'],[],'foreign_user_id');
         }
 

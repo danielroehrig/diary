@@ -1,33 +1,46 @@
 <?php
+
 namespace OCA\Diary\Controller;
 
+use OCA\Diary\Db\Entry;
+use OCA\Diary\Db\EntryMapper;
+use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
 use OCP\Util;
 
-class PageController extends Controller {
-	private $userId;
+class PageController extends Controller
+{
+    private $userId;
+    /**
+     * @var EntryMapper
+     */
+    private $mapper;
 
-	public function __construct($AppName, IRequest $request, $UserId){
-		parent::__construct($AppName, $request);
-		$this->userId = $UserId;
-	}
+    public function __construct($AppName, IRequest $request, $UserId, EntryMapper $mapper)
+    {
+        parent::__construct($AppName, $request);
+        $this->userId = $UserId;
+        $this->mapper = $mapper;
+    }
 
-	/**
-	 * CAUTION: the @Stuff turns off security checks; for this page no admin is
-	 *          required and no CSRF check. If you don't know what CSRF is, read
-	 *          it up in the docs or you might create a security hole. This is
-	 *          basically the only required method to add this exemption, don't
-	 *          add it to any other method if you don't exactly know what it does
-	 *
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 */
-	public function index() {
+    /**
+     * CAUTION: the @Stuff turns off security checks; for this page no admin is
+     *          required and no CSRF check. If you don't know what CSRF is, read
+     *          it up in the docs or you might create a security hole. This is
+     *          basically the only required method to add this exemption, don't
+     *          add it to any other method if you don't exactly know what it does
+     *
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function index()
+    {
         Util::addScript($this->appName, 'diary-main');
-		return new TemplateResponse('diary', 'index');  // templates/index.php
-	}
+        return new TemplateResponse('diary', 'index');  // templates/index.php
+    }
 
     /**
      * @param string $date ISO date as identifier
@@ -35,8 +48,15 @@ class PageController extends Controller {
      * @return string[]
      * @NoAdminRequired
      */
-    public function updateEntry(string $date, string $content): array {
-        return ['content'=>$content.'yada'.$date];
+    public function updateEntry(string $date, string $content): DataResponse
+    {
+        $entry = new Entry();
+        $entry->setId($this->userId . $date);
+        $entry->setUid($this->userId);
+        $entry->setEntry_date($date);
+        $entry->setEntry_content($content);
+
+        return new DataResponse($this->mapper->insertOrUpdate($entry));
     }
 
 
