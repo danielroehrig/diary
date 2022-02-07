@@ -12,6 +12,14 @@ class EntryMapper extends QBMapper
         parent::__construct($db, 'diary', Entry::class);
     }
 
+    /**
+     * @param string $uid
+     * @param string $date
+     * @return mixed|\OCP\AppFramework\Db\Entity
+     * @throws \OCP\AppFramework\Db\DoesNotExistException
+     * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
+     * @throws \OCP\DB\Exception
+     */
     public function find(string $uid, string $date)
     {
         $qb = $this->db->getQueryBuilder();
