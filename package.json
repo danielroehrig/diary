@@ -24,7 +24,8 @@
     "easymde": "^2.15.0",
     "nextcloud-moment": "^0.0.10",
     "vue": "^2.6.14",
-    "vue-router": "^3.5.3"
+    "vue-router": "^3.5.3",
+    "vue-simplemde": "^2.0.1"
   },
   "devDependencies": {
     "@nextcloud/babel-config": "^1.0.0",
