@@ -8,16 +8,16 @@ use OCP\AppFramework\Db\Entity;
 class Entry extends Entity implements JsonSerializable
 {
 
-    protected $entry_date;
+    protected $entryDate;
     protected $uid;
-    protected $entry_content;
+    protected $entryContent;
 
     public function __construct()
     {
         $this->addType('id', 'string');
         $this->addType('uid', 'string');
-        $this->addType('entry_date', 'string');
-        $this->addType('entry_content', 'string');
+        $this->addType('entryDate', 'string');
+        $this->addType('entryContent', 'string');
     }
 
     /**
@@ -28,8 +28,8 @@ class Entry extends Entity implements JsonSerializable
         return [
             'id' => $this->id,
             'uid' => $this->uid,
-            'entry_date' => $this->entry_date,
-            'entry_content' => $this->entry_content,
+            'entryDate' => $this->entryDate,
+            'entryContent' => $this->entryContent,
         ];
     }
 }
