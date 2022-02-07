@@ -9,8 +9,9 @@
  */
 return [
     'routes' => [
-	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-	   ['name' => 'page#index', 'url' => '/date/{date}', 'verb' => 'GET', 'postfix'=>'catchAll'],
-	   ['name' => 'page#update_entry', 'url' => '/entry/{date}', 'verb' => 'PUT'],
+        ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
+        ['name' => 'page#index', 'url' => '/date/{date}', 'verb' => 'GET', 'postfix' => 'catchAll'],
+        ['name' => 'page#get_entry', 'url' => '/entry/{date}', 'verb' => 'GET'],
+        ['name' => 'page#update_entry', 'url' => '/entry/{date}', 'verb' => 'PUT'],
     ]
 ];

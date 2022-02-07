@@ -4,8 +4,10 @@ namespace OCA\Diary\Controller;
 
 use OCA\Diary\Db\Entry;
 use OCA\Diary\Db\EntryMapper;
-use OCP\AppFramework\Http;
+use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\DB\Exception;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
@@ -43,9 +45,27 @@ class PageController extends Controller
     }
 
     /**
+     * @param string $date
+     * @return DataResponse
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function getEntry(string $date): DataResponse
+    {
+        try {
+            $entry = $this->mapper->find($this->userId, $date);
+        } catch (DoesNotExistException $e) {
+            return new DataResponse(["isEmpty" => true]);
+        } catch (MultipleObjectsReturnedException $e) {
+        } catch (Exception $e) {
+        }
+        return new DataResponse($entry);
+    }
+
+    /**
      * @param string $date ISO date as identifier
      * @param string $content Diary entry to save
-     * @return string[]
+     * @return DataResponse
      * @NoAdminRequired
      */
     public function updateEntry(string $date, string $content): DataResponse
