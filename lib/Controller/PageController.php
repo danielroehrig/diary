@@ -73,8 +73,8 @@ class PageController extends Controller
         $entry = new Entry();
         $entry->setId($this->userId . $date);
         $entry->setUid($this->userId);
-        $entry->setEntry_date($date);
-        $entry->setEntry_content($content);
+        $entry->setEntryDate($date);
+        $entry->setEntryContent($content);
 
         return new DataResponse($this->mapper->insertOrUpdate($entry));
     }
