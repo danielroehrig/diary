@@ -25,6 +25,7 @@
 import { AppContent, AppNavigation, Content, DatetimePicker } from '@nextcloud/vue'
 import Editor from './Editor'
 import moment from 'nextcloud-moment'
+
 export default {
 	name: 'Diary',
 	components: { AppNavigation, Content, Editor, AppContent, DatetimePicker },
@@ -69,7 +70,3 @@ export default {
 	},
 }
 </script>
-
-<style scoped>
-
-</style>

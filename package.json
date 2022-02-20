@@ -21,7 +21,6 @@
     "@nextcloud/axios": "^1.8.0",
     "@nextcloud/router": "^2.0.0",
     "@nextcloud/vue": "^4.3.0",
-    "easymde": "^2.15.0",
     "nextcloud-moment": "^0.0.10",
     "vue": "^2.6.14",
     "vue-router": "^3.5.3",

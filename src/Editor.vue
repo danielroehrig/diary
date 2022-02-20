@@ -6,14 +6,10 @@
 		<div id="title">
 			{{ date }}
 		</div>
-		<div class="editor">
-			<textarea id="diary-editor" />
-		</div>
-		<VueSimplemde ref="markdownEditor" v-model="content" />
+		<VueSimplemde ref="markdownEditor" v-model="content" @input="updateEntry" />
 	</div>
 </template>
 <script>
-import EasyMDE from 'easymde'
 import VueSimplemde from 'vue-simplemde'
 
 import axios from '@nextcloud/axios'
@@ -35,21 +31,17 @@ export default {
 			content: '',
 		}
 	},
+	computed: {
+		simplemde() {
+			return this.$refs.markdownEditor.simplemde
+		},
+	},
 	created() {
 		this.$watch(() => this.$route.params, () => this.fetchEntry(), { immediate: true })
 	},
 	mounted() {
-		this.editor = new EasyMDE({
-			element: document.getElementById('diary-editor'),
-			autoDownloadFontAwesome: false,
-			autofocus: true,
-			forceSync: true,
-			spellChecker: false,
-			nativeSpellcheck: false,
-		})
-		this.editor.value('hi kids ' + this.date)
-		this.editor.codemirror.on('change', () => {
-			const newContent = this.editor.value()
+		this.simplemde.codemirror.on('change', () => {
+			const newContent = this.simplemde.value()
 			const payload = {
 				content: newContent,
 			}
@@ -84,13 +76,29 @@ export default {
 					console.log(error)
 				})
 		},
+		updateEntry(input) {
+			const payload = {
+				content: input,
+			}
+			// eslint-disable-next-line no-console
+			console.log(input)
+			// Send content to backend
+			axios.put(generateUrl('apps/diary/entry/' + this.date), payload)
+				.then(response => {
+					// eslint-disable-next-line no-console
+					console.log(response)
+				})
+				.catch(error => {
+					// eslint-disable-next-line no-console
+					console.log(error)
+				})
+		},
 	},
 }
 </script>
 <style lang="css">
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 @import '~simplemde/dist/simplemde.min.css';
-@import '~easymde/dist/easymde.min.css';
 
 .editor {
 	padding-left: 3em;
