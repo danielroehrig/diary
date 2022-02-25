@@ -53,8 +53,8 @@ export default {
 	},
 	methods: {
 		onDateChange(date) {
-			// eslint-disable-next-line no-console
-			console.log(date)
+			this.$router.push({ name: 'date', params: { date: moment(date).format('YYYY-MM-DD') } })
+			this.calendarOpen = false
 		},
 		openCalendar() {
 			this.calendarOpen = !this.calendarOpen
