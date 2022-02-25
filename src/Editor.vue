@@ -3,8 +3,8 @@
 		<div v-if="loading">
 			Loading ...
 		</div>
-		<div id="title">
-			{{ date }}
+		<div id="entry-title">
+			{{ title }}
 		</div>
 		<VueSimplemde ref="markdownEditor" v-model="content" @input="updateEntry" />
 	</div>
@@ -14,6 +14,7 @@ import VueSimplemde from 'vue-simplemde'
 
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
+import moment from 'nextcloud-moment'
 
 export default {
 	name: 'Editor',
@@ -34,6 +35,9 @@ export default {
 	computed: {
 		simplemde() {
 			return this.$refs.markdownEditor.simplemde
+		},
+		title() {
+			return moment(this.date).format('LL')
 		},
 	},
 	created() {
@@ -103,5 +107,12 @@ export default {
 .editor {
 	padding-left: 3em;
 	padding-top: 3em;
+}
+
+#entry-title {
+	padding-left: 2.5em;
+	padding-top: 0.5em;
+	font-weight: bold;
+	font-size: larger;
 }
 </style>
