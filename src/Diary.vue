@@ -1,5 +1,5 @@
 <template>
-	<Content app-name="diary">
+	<Content id="diary-content" app-name="diary">
 		<AppNavigation>
 			<div style="display:flex;">
 				<button class="icon icon-view-previous" @click="goPrevDay" />
@@ -16,7 +16,7 @@
 			</div>
 		</AppNavigation>
 		<AppContent>
-			<Editor :date="date" />
+			<Editor id="diary-editor" :date="date" />
 		</AppContent>
 	</content>
 </template>
@@ -70,3 +70,13 @@ export default {
 	},
 }
 </script>
+<style>
+#diary-content {
+	width: 100%;
+}
+
+#diary-editor {
+	width: 100%;
+	max-width: 800px;
+}
+</style>
