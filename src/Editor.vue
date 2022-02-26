@@ -4,12 +4,11 @@
 			Loading ...
 		</div>
 		<div id="entry-title">
-			{{ title }}
+			{{ unSavedMarker }}{{ title }}
 		</div>
 		<VueSimplemde ref="markdownEditor"
 			v-model="content"
-			:configs="configs"
-			@input="updateEntry" />
+			:configs="configs" />
 	</div>
 </template>
 <script>
@@ -31,6 +30,7 @@ export default {
 	data() {
 		return {
 			loading: false,
+			unSavedChanges: false,
 			editor: null,
 			content: '',
 			configs: {
@@ -48,32 +48,49 @@ export default {
 		title() {
 			return moment(this.date).format('LL')
 		},
+		unSavedMarker() {
+			return this.unSavedChanges ? '*' : ''
+		},
 	},
 	created() {
 		this.$watch(() => this.$route.params, () => this.fetchEntry(), { immediate: true })
 	},
 	mounted() {
 		this.simplemde.codemirror.on('change', () => {
-			const newContent = this.simplemde.value()
-			const payload = {
-				content: newContent,
+			// A load is a change, so we need to catch this
+			if (this.loading) {
+				this.loading = false
+				return
 			}
 			// eslint-disable-next-line no-console
-			console.log(newContent)
-			// Send content to backend
-			axios.put(generateUrl('apps/diary/entry/' + this.date), payload)
-				.then(response => {
-					// eslint-disable-next-line no-console
-					console.log(response)
-				})
-				.catch(error => {
-					// eslint-disable-next-line no-console
-					console.log(error)
-				})
+			console.log('Why is this triggered?')
+			this.unSavedChanges = true
+			clearTimeout(this.timeout)
+			const saveFunction = () => {
+				const newContent = this.simplemde.value()
+				const payload = {
+					content: newContent,
+				}
+				// eslint-disable-next-line no-console
+				console.log(newContent)
+				// Send content to backend
+				axios.put(generateUrl('apps/diary/entry/' + this.date), payload)
+					.then(response => {
+						this.unSavedChanges = false
+						// eslint-disable-next-line no-console
+						console.log(response)
+					})
+					.catch(error => {
+						// eslint-disable-next-line no-console
+						console.log(error)
+					})
+			}
+			this.timeout = setTimeout(saveFunction, 500)
 		})
 	},
 	methods: {
 		fetchEntry() {
+			this.loading = true
 			axios.get(generateUrl('apps/diary/entry/' + this.$route.params.date))
 				.then(response => {
 					// eslint-disable-next-line no-console
@@ -83,23 +100,6 @@ export default {
 					} else {
 						this.content = ''
 					}
-				})
-				.catch(error => {
-					// eslint-disable-next-line no-console
-					console.log(error)
-				})
-		},
-		updateEntry(input) {
-			const payload = {
-				content: input,
-			}
-			// eslint-disable-next-line no-console
-			console.log(input)
-			// Send content to backend
-			axios.put(generateUrl('apps/diary/entry/' + this.date), payload)
-				.then(response => {
-					// eslint-disable-next-line no-console
-					console.log(response)
 				})
 				.catch(error => {
 					// eslint-disable-next-line no-console
