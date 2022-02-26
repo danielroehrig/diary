@@ -34,7 +34,9 @@ export default {
 			editor: null,
 			content: '',
 			configs: {
-				toolbar: ['bold', 'italic', 'strikethrough', 'heading', '|', 'quote', 'unordered-list', 'ordered-list', '|', 'image', '|', 'link', '|', 'preview', '|', 'guide'],
+				toolbar: ['bold', 'italic', 'strikethrough', 'heading', '|', 'quote', 'unordered-list', 'ordered-list', '|', 'link', '|', 'preview', '|', 'guide'],
+				autoDownloadFontAwesome: false,
+				placeholder: 'Write here (translate that)',
 			},
 		}
 	},

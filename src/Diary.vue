@@ -73,6 +73,7 @@ export default {
 <style>
 #diary-content {
 	width: 100%;
+	padding-top: 0;
 }
 
 #diary-editor {
