@@ -6,7 +6,10 @@
 		<div id="entry-title">
 			{{ title }}
 		</div>
-		<VueSimplemde ref="markdownEditor" v-model="content" @input="updateEntry" />
+		<VueSimplemde ref="markdownEditor"
+			v-model="content"
+			:configs="configs"
+			@input="updateEntry" />
 	</div>
 </template>
 <script>
@@ -30,6 +33,9 @@ export default {
 			loading: false,
 			editor: null,
 			content: '',
+			configs: {
+				toolbar: ['bold', 'italic', 'strikethrough', 'heading', '|', 'quote', 'unordered-list', 'ordered-list', '|', 'image', '|', 'link', '|', 'preview', '|', 'guide'],
+			},
 		}
 	},
 	computed: {
