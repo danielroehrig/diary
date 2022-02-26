@@ -37,6 +37,7 @@ export default {
 				toolbar: ['bold', 'italic', 'strikethrough', 'heading', '|', 'quote', 'unordered-list', 'ordered-list', '|', 'link', '|', 'preview', '|', 'guide'],
 				autoDownloadFontAwesome: false,
 				placeholder: 'Write here (translate that)',
+				spellChecker: false,
 			},
 		}
 	},
