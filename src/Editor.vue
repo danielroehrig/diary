@@ -1,14 +1,17 @@
 <template>
-	<div>
-		<div v-if="loading">
-			Loading ...
-		</div>
+	<div style="position: relative">
 		<div id="entry-title">
+			<i v-if="isLoading" class="fa fa-spinner fa-spin" />
 			{{ unSavedMarker }}{{ title }}
 		</div>
 		<VueSimplemde ref="markdownEditor"
 			v-model="content"
 			:configs="configs" />
+		<div v-if="isLoading" id="overlay">
+			<div style="margin: auto">
+				<i class="fa fa-spinner fa-spin fa-10x" />
+			</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -29,7 +32,7 @@ export default {
 	},
 	data() {
 		return {
-			loading: false,
+			status: null,
 			unSavedChanges: false,
 			editor: null,
 			content: '',
@@ -51,6 +54,9 @@ export default {
 		unSavedMarker() {
 			return this.unSavedChanges ? '*' : ''
 		},
+		isLoading() {
+			return this.status === 'loading'
+		},
 	},
 	created() {
 		this.$watch(() => this.$route.params, () => this.fetchEntry(), { immediate: true })
@@ -58,8 +64,10 @@ export default {
 	mounted() {
 		this.simplemde.codemirror.on('change', () => {
 			// A load is a change, so we need to catch this
-			if (this.loading) {
-				this.loading = false
+			if (this.status === 'loaded') {
+				// eslint-disable-next-line no-console
+				console.log('Loading stopped')
+				this.status = 'writing'
 				return
 			}
 			// eslint-disable-next-line no-console
@@ -90,7 +98,7 @@ export default {
 	},
 	methods: {
 		fetchEntry() {
-			this.loading = true
+			this.status = 'loading'
 			axios.get(generateUrl('apps/diary/entry/' + this.$route.params.date))
 				.then(response => {
 					// eslint-disable-next-line no-console
@@ -100,10 +108,12 @@ export default {
 					} else {
 						this.content = ''
 					}
+					this.status = 'loaded'
 				})
 				.catch(error => {
 					// eslint-disable-next-line no-console
 					console.log(error)
+					this.status = 'error'
 				})
 		},
 	},
@@ -123,5 +133,16 @@ export default {
 	padding-top: 0.5em;
 	font-weight: bold;
 	font-size: larger;
+}
+
+#overlay {
+	z-index: 99;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: rgba(255, 255, 255, 0.4);
+	display: flex;
 }
 </style>
