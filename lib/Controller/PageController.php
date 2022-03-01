@@ -70,6 +70,7 @@ class PageController extends Controller
      */
     public function updateEntry(string $date, string $content): DataResponse
     {
+        $content = strip_tags($content);
         $entry = new Entry();
         $entry->setId($this->userId . $date);
         $entry->setUid($this->userId);
