@@ -19,6 +19,7 @@
         <navigation>
             <name>Diary</name>
             <route>diary.page.index</route>
+            <icon>diary.svg</icon>
         </navigation>
     </navigations>
 </info>
