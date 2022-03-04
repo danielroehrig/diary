@@ -3,8 +3,8 @@
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>diary</id>
     <name>Diary</name>
-    <summary>A simple diary.</summary>
-    <description><![CDATA[A simple diary.]]></description>
+    <summary>A simple diary</summary>
+    <description><![CDATA[A very simple markdown diary.]]></description>
     <version>0.0.1</version>
     <licence>agpl</licence>
     <author mail="mail@danielroehrig.de" homepage="https://www.a-broad-view.com/">Daniel Röhrig</author>
@@ -13,7 +13,8 @@
     <category>tools</category>
     <bugs>https://github.com/danielroehrig</bugs>
     <dependencies>
-        <nextcloud min-version="12" max-version="12"/>
+        <php min-version="7.3" max-version="8.0" />
+        <nextcloud min-version="20" max-version="24"/>
     </dependencies>
     <navigations>
         <navigation>
