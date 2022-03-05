@@ -41,6 +41,7 @@ export default {
 				autoDownloadFontAwesome: false,
 				placeholder: 'Write here (translate that)',
 				spellChecker: false,
+				status: false,
 			},
 		}
 	},
