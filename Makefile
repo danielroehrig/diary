@@ -129,6 +129,12 @@ appstore:
 	mkdir -p $(cert_dir)
 	php ../$(app_name)/tools/file_from_env.php "app_private_key" "$(cert_dir)/$(app_name).key"
 	php ../$(app_name)/tools/file_from_env.php "app_public_crt" "$(cert_dir)/$(app_name).crt"
+	@echo "Signing app files"
+	php ../../occ integrity:sign-app \
+		--privateKey=$(cert_dir)/$(app_name).key \
+		--certificate=$(cert_dir)/$(app_name).crt \
+		--path=../$(app_name)
+	@echo "Signing app files ... done"
 	rm -rf $(appstore_build_directory)
 	mkdir -p $(appstore_build_directory)
 	tar cvzf $(appstore_package_name).tar.gz \
@@ -151,12 +157,6 @@ appstore:
 	--exclude="../$(app_name)/.*" \
 	--exclude="../$(app_name)/js/.*" \
 	../$(app_name)
-	@echo "Signing app files"
-	php ../../occ integrity:sign-app \
-		--privateKey=$(cert_dir)/$(app_name).key \
-		--certificate=$(cert_dir)/$(app_name).crt \
-		--path=$(appstore_sign_dir)/$(app_name)
-	@echo "Signing app files ... done"
 
 .PHONY: test
 test: composer
