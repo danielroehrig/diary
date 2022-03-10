@@ -82,6 +82,7 @@ endif
 # Installs npm dependencies
 .PHONY: npm
 npm:
+    npm install
 ifeq (,$(wildcard $(CURDIR)/package.json))
 	cd js && $(npm) run build
 else
