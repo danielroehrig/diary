@@ -127,8 +127,8 @@ source:
 .PHONY: appstore
 appstore:
 	mkdir -p $(cert_dir)
-	php ./bin/tools/file_from_env.php "app_private_key" "$(cert_dir)/$(app_name).key"
-	php ./bin/tools/file_from_env.php "app_public_crt" "$(cert_dir)/$(app_name).crt"
+	php ./$(app_name)/tools/file_from_env.php "app_private_key" "$(cert_dir)/$(app_name).key"
+	php ./$(app_name)/tools/file_from_env.php "app_public_crt" "$(cert_dir)/$(app_name).crt"
 	rm -rf $(appstore_build_directory)
 	mkdir -p $(appstore_build_directory)
 	tar cvzf $(appstore_package_name).tar.gz \
