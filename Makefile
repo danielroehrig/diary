@@ -47,6 +47,7 @@ appstore_build_directory=$(CURDIR)/build/artifacts/appstore
 appstore_package_name=$(appstore_build_directory)/$(app_name)
 npm=$(shell which npm 2> /dev/null)
 composer=$(shell which composer 2> /dev/null)
+cert_dir=$(HOME)/.nextcloud/certificates
 
 all: build
 
@@ -125,6 +126,9 @@ source:
 # Builds the source package for the app store, ignores php and js tests
 .PHONY: appstore
 appstore:
+	mkdir -p $(cert_dir)
+	php ./bin/tools/file_from_env.php "app_private_key" "$(cert_dir)/$(app_name).key"
+	php ./bin/tools/file_from_env.php "app_public_crt" "$(cert_dir)/$(app_name).crt"
 	rm -rf $(appstore_build_directory)
 	mkdir -p $(appstore_build_directory)
 	tar cvzf $(appstore_package_name).tar.gz \
@@ -136,6 +140,7 @@ appstore:
 	--exclude="../$(app_name)/phpunit*xml" \
 	--exclude="../$(app_name)/composer.*" \
 	--exclude="../$(app_name)/node_modules" \
+	--exclude="../$(app_name)/tools" \
 	--exclude="../$(app_name)/tests" \
 	--exclude="../$(app_name)/test" \
 	--exclude="../$(app_name)/*.log" \
@@ -146,6 +151,12 @@ appstore:
 	--exclude="../$(app_name)/.*" \
 	--exclude="../$(app_name)/js/.*" \
 	../$(app_name)
+	@echo "Signing app files"
+	php ../../occ integrity:sign-app \
+		--privateKey=$(cert_dir)/$(app_name).key \
+		--certificate=$(cert_dir)/$(app_name).crt \
+		--path=$(appstore_sign_dir)/$(app_name)
+	@echo "Signing app files ... done"
 
 .PHONY: test
 test: composer
