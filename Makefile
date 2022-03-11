@@ -147,6 +147,7 @@ appstore:
 	--exclude="../$(app_name)/composer.*" \
 	--exclude="../$(app_name)/node_modules" \
 	--exclude="../$(app_name)/tools" \
+	--exclude="../$(app_name)/screenshots" \
 	--exclude="../$(app_name)/tests" \
 	--exclude="../$(app_name)/test" \
 	--exclude="../$(app_name)/*.log" \
