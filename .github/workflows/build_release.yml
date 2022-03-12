@@ -56,11 +56,11 @@ jobs:
         id: read_release
         shell: bash
         run: |
-          r=$(cat ../server/apps/${{ env.APP_NAME }}/RELEASE.md)                       # <--- Read release.md
-          r="${r//'%'/'%25'}"                                                          # Multiline escape sequences for %
-          r="${r//$'\n'/'%0A'}"                                                        # Multiline escape sequences for '\n'
-          r="${r//$'\r'/'%0D'}"                                                        # Multiline escape sequences for '\r'
-          echo "::set-output name=RELEASE_BODY::$r"                                    # <--- Set environment variable
+          r=$(cat ../server/apps/${{ env.APP_NAME }}/RELEASE.md)                      
+          r="${r//'%'/'%25'}"                                                         
+          r="${r//$'\n'/'%0A'}"                                                       
+          r="${r//$'\r'/'%0D'}"                                                        
+          echo "::set-output name=RELEASE_BODY::$r"
 
       - name: Upload app tarball to release
         uses: svenstaro/upload-release-action@v2
@@ -72,7 +72,7 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
           body: |
-            ${{ steps.read_release.outputs.RELEASE_BODY }}  # <--- Use environment variables that was created earlier
+            ${{ steps.read_release.outputs.RELEASE_BODY }}
 
       - name: Upload app to Nextcloud appstore
         uses: R0Wi/nextcloud-appstore-push-action@v1
