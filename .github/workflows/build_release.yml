@@ -52,6 +52,16 @@ jobs:
           app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
           app_public_crt: ${{ secrets.APP_PUBLIC_CRT }}
 
+      - name: Read release.md and use it as a body of new release
+        id: read_release
+        shell: bash
+        run: |
+          r=$(cat ../server/apps/${{ env.APP_NAME }}/RELEASE.md)                       # <--- Read release.md
+          r="${r//'%'/'%25'}"                               # Multiline escape sequences for %
+          r="${r//$'\n'/'%0A'}"                             # Multiline escape sequences for '\n'
+          r="${r//$'\r'/'%0D'}"                             # Multiline escape sequences for '\r'
+          echo "::set-output name=RELEASE_BODY::$r"         # <--- Set environment variable
+
       - name: Upload app tarball to release
         uses: svenstaro/upload-release-action@v2
         id: attach_to_release
