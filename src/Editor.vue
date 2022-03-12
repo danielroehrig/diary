@@ -66,13 +66,9 @@ export default {
 		this.simplemde.codemirror.on('change', () => {
 			// A load is a change, so we need to catch this
 			if (this.status === 'loaded') {
-				// eslint-disable-next-line no-console
-				console.log('Loading stopped')
 				this.status = 'writing'
 				return
 			}
-			// eslint-disable-next-line no-console
-			console.log('Why is this triggered?')
 			this.unSavedChanges = true
 			clearTimeout(this.timeout)
 			const saveFunction = () => {
@@ -80,16 +76,13 @@ export default {
 				const payload = {
 					content: newContent,
 				}
-				// eslint-disable-next-line no-console
-				console.log(newContent)
 				// Send content to backend
 				axios.put(generateUrl('apps/diary/entry/' + this.date), payload)
 					.then(response => {
 						this.unSavedChanges = false
-						// eslint-disable-next-line no-console
-						console.log(response)
 					})
 					.catch(error => {
+						// TODO Show alert box with error
 						// eslint-disable-next-line no-console
 						console.log(error)
 					})
@@ -102,14 +95,15 @@ export default {
 			this.status = 'loading'
 			axios.get(generateUrl('apps/diary/entry/' + this.$route.params.date))
 				.then(response => {
-					// eslint-disable-next-line no-console
-					console.log(response)
 					if (response.data.entryContent) {
 						this.content = response.data.entryContent
 					} else {
 						this.content = ''
 					}
 					this.status = 'loaded'
+					// This ensures, that the right content is immediately shown. Actually, the model should force the editor to
+					// update, but that doesn't seem to happen when moving between dates
+					this.simplemde.value(this.content)
 				})
 				.catch(error => {
 					// eslint-disable-next-line no-console
