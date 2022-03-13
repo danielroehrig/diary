@@ -130,10 +130,19 @@ export default {
 .CodeMirror {
 	background-color: var(--color-main-background);
 	color: var(--color-main-text);
+	border: none;
+}
+
+.CodeMirror, .CodeMirror-scroll {
+	padding-bottom: 50px;
+}
+
+.CodeMirror-cursor {
+	border-color: var(--color-main-text);
 }
 
 #entry-title {
-	padding-left: 2.5em;
+	padding-left: 1em;
 	padding-top: 0.5em;
 	font-weight: bold;
 	font-size: larger;
