@@ -79,7 +79,7 @@ export default {
 #diary-editor {
 	width: 100%;
 	max-width: 800px;
-	padding-left: 10px;
+	padding-left: 20px;
 }
 
 .editor-toolbar {

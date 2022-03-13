@@ -142,7 +142,7 @@ export default {
 }
 
 #entry-title {
-	padding-left: 2.5em;
+	padding-left: 1em;
 	padding-top: 0.5em;
 	font-weight: bold;
 	font-size: larger;
