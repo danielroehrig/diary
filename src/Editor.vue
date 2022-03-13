@@ -132,6 +132,14 @@ export default {
 	color: var(--color-main-text);
 }
 
+.CodeMirror, .CodeMirror-scroll {
+	padding-bottom: 50px;
+}
+
+.CodeMirror-cursor {
+	border-color: var(--color-main-text);
+}
+
 #entry-title {
 	padding-left: 2.5em;
 	padding-top: 0.5em;
