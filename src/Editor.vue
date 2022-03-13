@@ -123,6 +123,15 @@ export default {
 	padding-top: 3em;
 }
 
+.editor-toolbar a {
+	color: var(--color-main-text) !important;
+}
+
+.CodeMirror {
+	background-color: var(--color-main-background);
+	color: var(--color-main-text);
+}
+
 #entry-title {
 	padding-left: 2.5em;
 	padding-top: 0.5em;
