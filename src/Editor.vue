@@ -130,6 +130,7 @@ export default {
 .CodeMirror {
 	background-color: var(--color-main-background);
 	color: var(--color-main-text);
+	border: none;
 }
 
 .CodeMirror, .CodeMirror-scroll {
