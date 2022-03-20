@@ -35,9 +35,9 @@ jobs:
           database-type: ${{ matrix.database }}
 
       - name: Run composer with dev env
-          run: |
-            cd ../server/apps/${{ env.APP_NAME }} && composer install
+        run: |
+          cd ../server/apps/${{ env.APP_NAME }} && composer install
 
       - name: Run unit tests
-          run: |
-            cd ../server/apps/${{ env.APP_NAME }} && vendor/bin/phpunit
+        run: |
+          cd ../server/apps/${{ env.APP_NAME }} && vendor/bin/phpunit
