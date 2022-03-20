@@ -4,3 +4,4 @@ js/*.js
 js/*.txt
 js/*.map
 build
+.phpunit.result.cache
