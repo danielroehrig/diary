@@ -1,0 +1,43 @@
+name: Build and publish app release
+
+on: push
+
+env:
+  APP_NAME: diary
+
+jobs:
+  unit_test:
+    environment: development
+    runs-on: ubuntu-latest
+    name: "Run unit tests"
+    strategy:
+      matrix:
+        php-versions: [ '7.4' ]
+        nextcloud: [ 'stable22' ]
+        database: [ 'sqlite' ]
+        phpunit-version: [ '9.5' ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: pdo_sqlite,pdo_mysql,pdo_pgsql,gd,zip
+          coverage: none
+
+      - name: Set up server with sqlite
+        uses: SMillerDev/nextcloud-actions/setup-nextcloud@fae87e29aa7cdf1ea0b8033c67f60e75b10be2cd
+        with:
+          cron: false
+          version: ${{ matrix.nextcloud }}
+          database-type: ${{ matrix.database }}
+
+      - name: Run Unit Tests
+        uses: php-actions/phpunit@v3
+        with:
+          configuration: ../server/apps/${{ env.APP_NAME }}/phpunit.xml
+          php_version: ${{ matrix.php-versions }}
+          version: ${{ matrix.phpunit-version }}
+          bootstrap: ../server/apps/${{ env.APP_NAME }}/tests/bootstrap.php
