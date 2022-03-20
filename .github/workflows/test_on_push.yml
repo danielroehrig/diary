@@ -1,6 +1,6 @@
 name: Build and publish app release
 
-on: push
+on: [ push, pull_request ]
 
 env:
   APP_NAME: diary
