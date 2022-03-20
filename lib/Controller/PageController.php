@@ -6,6 +6,7 @@ use OCA\Diary\Db\Entry;
 use OCA\Diary\Db\EntryMapper;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\DB\Exception;
 use OCP\IRequest;
@@ -38,7 +39,7 @@ class PageController extends Controller
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function index()
+    public function index(): TemplateResponse
     {
         Util::addScript($this->appName, 'diary-main');
         return new TemplateResponse('diary', 'index');  // templates/index.php
@@ -56,8 +57,8 @@ class PageController extends Controller
             $entry = $this->mapper->find($this->userId, $date);
         } catch (DoesNotExistException $e) {
             return new DataResponse(["isEmpty" => true]);
-        } catch (MultipleObjectsReturnedException $e) {
-        } catch (Exception $e) {
+        } catch (MultipleObjectsReturnedException|Exception $e) {
+            return new DataResponse(['error' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
         }
         return new DataResponse($entry);
     }
