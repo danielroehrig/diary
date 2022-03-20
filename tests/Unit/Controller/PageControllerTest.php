@@ -70,6 +70,12 @@ class PageControllerTest extends TestCase
         $this->assertEquals(["isEmpty" => true], $result->getData());
     }
 
+    public function testUpdateEntry()
+    {
+        $entryDate = "2022-08-07";
+        $this->assertTrue(false, "Yes, I know, I want to test something");
+    }
+
     /**
      * Create an Entry element
      * @param string $date
@@ -80,19 +86,10 @@ class PageControllerTest extends TestCase
     private function createMockEntry(string $date, string $userId, string $content): Entry
     {
         $entry = new Entry();
-        $reflectedEntry = new \ReflectionClass(Entry::class);
-        $reflectedDate = $reflectedEntry->getProperty('entryDate');
-        $reflectedDate->setAccessible(true);
-        $reflectedDate->setValue($entry, $date);
-        $reflectedUserId = $reflectedEntry->getProperty('uid');
-        $reflectedUserId->setAccessible(true);
-        $reflectedUserId->setValue($entry, $userId);
-        $reflectedContent = $reflectedEntry->getProperty('entryContent');
-        $reflectedContent->setAccessible(true);
-        $reflectedContent->setValue($entry, $content);
-        $reflectedId = $reflectedEntry->getProperty('id');
-        $reflectedId->setAccessible(true);
-        $reflectedId->setValue($entry, $userId . $date);
+        $entry->setId($this->userId . $date);
+        $entry->setUid($this->userId);
+        $entry->setEntryDate($date);
+        $entry->setEntryContent($content);
         return $entry;
 
     }
