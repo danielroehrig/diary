@@ -34,10 +34,10 @@ jobs:
           version: ${{ matrix.nextcloud }}
           database-type: ${{ matrix.database }}
 
-      - name: Run Unit Tests
-        uses: php-actions/phpunit@v3
-        with:
-          configuration: ../server/apps/${{ env.APP_NAME }}/phpunit.xml
-          php_version: ${{ matrix.php-versions }}
-          version: ${{ matrix.phpunit-version }}
-          bootstrap: ../server/apps/${{ env.APP_NAME }}/tests/bootstrap.php
+      - name: Run composer with dev env
+          run: |
+            cd ../server/apps/${{ env.APP_NAME }} && composer install
+
+      - name: Run unit tests
+          run: |
+            cd ../server/apps/${{ env.APP_NAME }} && vendor/bin/phpunit
