@@ -1,14 +1,7 @@
-# Version 0.0.3 - "Screenshots are already outdated"
+# Version 0.0.4 - "I have delivered value... but at what cost"
 
-Integrated the first feedback and mainly fought with CSS.
+Shout out to [KRAZAM](https://www.youtube.com/watch?v=DYvhC_RdIwQ&t=7s)
 
-### UI
+### DevOps
 
-* Remove border
-* Move editor to the right
-
-### Bugfixes
-
-* Writing an entry and then going back a day wouldn't update the textarea
-* Make it work when using a dark theme like breeze dark
-* Long text created a double scrollbar
+* Unit Tests on push!

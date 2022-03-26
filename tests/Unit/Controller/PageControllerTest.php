@@ -2,6 +2,7 @@
 
 namespace OCA\Diary\Tests\Unit\Controller;
 
+use Exception;
 use OCA\Diary\Db\Entry;
 use OCA\Diary\Db\EntryMapper;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -73,7 +74,30 @@ class PageControllerTest extends TestCase
     public function testUpdateEntry()
     {
         $entryDate = "2022-08-07";
-        $this->assertTrue(false, "Yes, I know, I want to test something");
+        $entryContent = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam";
+        $entry = $this->createMockEntry($entryDate, $this->userId, $entryContent);
+        $this->mapper->expects($this->once())
+            ->method('insertOrUpdate')
+            ->with($this->equalTo($entry))
+            ->will($this->returnValue($entry));
+        $result = $this->controller->updateEntry($entryDate, $entryContent);
+        $this->assertEquals(Http::STATUS_OK, $result->getStatus());
+        $this->assertEquals($entry, $result->getData());
+    }
+
+    public function testUpdateEntryFailure()
+    {
+        $this->expectException(Exception::class);
+        $entryDate = "2022-08-07";
+        $entryContent = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam";
+        $entry = $this->createMockEntry($entryDate, $this->userId, $entryContent);
+        $this->mapper->expects($this->once())
+            ->method('insertOrUpdate')
+            ->with($this->equalTo($entry))
+            ->will($this->throwException(new Exception("Some error while updating")));
+        $result = $this->controller->updateEntry($entryDate, $entryContent);
+        $this->assertEquals(Http::STATUS_INTERNAL_SERVER_ERROR, $result->getStatus());
+        $this->assertEquals(['error' => "Some error while updating"], $result->getData());
     }
 
     /**

@@ -78,7 +78,11 @@ class PageController extends Controller
         $entry->setEntryDate($date);
         $entry->setEntryContent($content);
 
-        return new DataResponse($this->mapper->insertOrUpdate($entry));
+        try {
+            return new DataResponse($this->mapper->insertOrUpdate($entry));
+        } catch (Exception $e) {
+            return new DataResponse(['error' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
+        }
     }
 
 
