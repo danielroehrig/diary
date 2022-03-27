@@ -3,25 +3,23 @@
 namespace OCA\Diary\Tests\Integration\Controller;
 
 use OCP\AppFramework\App;
-use Test\TestCase;
+use PHPUnit\Framework\TestCase;
 
 
-/**
- * This test shows how to make a small Integration Test. Query your class
- * directly from the container, only pass in mocks if needed and run your tests
- * against the database
- */
-class AppTest extends TestCase {
+class AppInstalledTest extends TestCase
+{
 
     private $container;
 
-    public function setUp() {
+    public function setUp(): void
+    {
         parent::setUp();
         $app = new App('diary');
         $this->container = $app->getContainer();
     }
 
-    public function testAppInstalled() {
+    public function testAppInstalled()
+    {
         $appManager = $this->container->query('OCP\App\IAppManager');
         $this->assertTrue($appManager->isInstalled('diary'));
     }
