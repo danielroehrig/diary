@@ -1,4 +1,4 @@
-name: Build and publish app release
+name: Test on push or pull_request
 
 on: [ push, pull_request ]
 
