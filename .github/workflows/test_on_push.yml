@@ -47,3 +47,7 @@ jobs:
       - name: Run unit tests
         run: |
           cd ../server/apps/${{ env.APP_NAME }} && vendor/bin/phpunit
+
+      - name: Run integration tests
+        run: |
+          cd ../server/apps/${{ env.APP_NAME }} && vendor/bin/phpunit --configuration phpunit.integration.xml
