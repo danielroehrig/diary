@@ -2,10 +2,10 @@
 
 namespace OCA\Diary\Tests\Unit\Controller;
 
-use Exception;
 use OCA\Diary\Db\Entry;
 use OCA\Diary\Db\EntryMapper;
 use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\AppFramework\Http;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -71,6 +71,19 @@ class PageControllerTest extends TestCase
         $this->assertEquals(["isEmpty" => true], $result->getData());
     }
 
+    public function testMultipleFound()
+    {
+        $entryDate = "2022-08-07";
+        $this->mapper->expects($this->once())
+            ->method('find')
+            ->with($this->equalTo($this->userId),
+                $this->equalTo($entryDate))
+            ->will($this->throwException(new MultipleObjectsReturnedException("Id not found")));
+        $result = $this->controller->getEntry($entryDate);
+        $this->assertEquals(Http::STATUS_INTERNAL_SERVER_ERROR, $result->getStatus());
+        $this->assertEquals(['error' => "Id not found"], $result->getData());
+    }
+
     public function testUpdateEntry()
     {
         $entryDate = "2022-08-07";
@@ -87,14 +100,13 @@ class PageControllerTest extends TestCase
 
     public function testUpdateEntryFailure()
     {
-        $this->expectException(Exception::class);
         $entryDate = "2022-08-07";
         $entryContent = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam";
         $entry = $this->createMockEntry($entryDate, $this->userId, $entryContent);
         $this->mapper->expects($this->once())
             ->method('insertOrUpdate')
             ->with($this->equalTo($entry))
-            ->will($this->throwException(new Exception("Some error while updating")));
+            ->will($this->throwException(new \OCP\DB\Exception("Some error while updating")));
         $result = $this->controller->updateEntry($entryDate, $entryContent);
         $this->assertEquals(Http::STATUS_INTERNAL_SERVER_ERROR, $result->getStatus());
         $this->assertEquals(['error' => "Some error while updating"], $result->getData());
