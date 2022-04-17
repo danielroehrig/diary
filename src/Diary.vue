@@ -31,7 +31,6 @@
 						</ActionButton>
 					</template>
 				</AppNavigationItem>
-				<AppNavigationSettings title="My title" />
 			</template>
 		</AppNavigation>
 		<AppContent>
@@ -47,7 +46,6 @@ import {
 	Content,
 	AppNavigationItem,
 	DatetimePicker,
-	AppNavigationSettings,
 	Button,
 	ActionButton,
 } from '@nextcloud/vue'
@@ -65,7 +63,6 @@ export default {
 		AppContent,
 		AppNavigationItem,
 		DatetimePicker,
-		AppNavigationSettings,
 		Button,
 		ActionButton,
 		FilePdfBox,
