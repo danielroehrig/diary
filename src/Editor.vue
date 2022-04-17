@@ -127,6 +127,11 @@ export default {
 	color: var(--color-main-text) !important;
 }
 
+.editor-preview {
+	background-color: var(--color-main-background);
+	color: var(--color-main-text);
+}
+
 .CodeMirror {
 	background-color: var(--color-main-background);
 	color: var(--color-main-text);
