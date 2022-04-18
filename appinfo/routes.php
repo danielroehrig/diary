@@ -13,5 +13,6 @@ return [
         ['name' => 'page#index', 'url' => '/date/{date}', 'verb' => 'GET', 'postfix' => 'catchAll'],
         ['name' => 'page#get_entry', 'url' => '/entry/{date}', 'verb' => 'GET'],
         ['name' => 'page#update_entry', 'url' => '/entry/{date}', 'verb' => 'PUT'],
+        ['name' => 'export#get_markdown', 'url' => '/export/markdown', 'verb' => 'GET'],
     ]
 ];
