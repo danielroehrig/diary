@@ -146,6 +146,15 @@ export default {
 	border-color: var(--color-main-text);
 }
 
+.editor-toolbar a.active, .editor-toolbar a:hover {
+	background-color: var(--color-background-hover) !important;
+}
+
+.editor-toolbar.disabled-for-preview a:not(.no-disable) {
+	background-color: var(--color-background-darker) !important;
+	color: var(--color-text-lighter) !important;
+}
+
 #entry-title {
 	padding-left: 1em;
 	padding-top: 0.5em;
