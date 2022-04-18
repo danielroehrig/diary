@@ -33,4 +33,22 @@ class EntryMapper extends QBMapper
 
         return $this->findEntity($qb);
     }
+
+    /**
+     * @param string $uid
+     * @param string $date
+     * @return array|\OCP\AppFramework\Db\Entity[]
+     * @throws \OCP\DB\Exception
+     */
+    public function findAll(string $uid)
+    {
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('*')
+            ->from($this->getTableName())
+            ->where(
+                $qb->expr()->eq('uid', $qb->createNamedParameter($uid))
+            );
+
+        return $this->findEntities($qb);
+    }
 }
