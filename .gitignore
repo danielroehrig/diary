@@ -6,3 +6,9 @@ js/*.map
 build
 .phpunit.result.cache
 .phpunit.cache
+
+# Editor files
+
+.vscode/
+.idea/
+*.iml
