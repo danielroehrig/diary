@@ -2,6 +2,7 @@
 
 namespace OCA\Diary\Controller;
 
+use League\CommonMark\CommonMarkConverter;
 use OCA\Diary\Db\Entry;
 use OCA\Diary\Db\EntryMapper;
 use OCP\AppFramework\Http\DataDownloadResponse;
@@ -37,9 +38,30 @@ class ExportController extends Controller
         /** @var Entry $entry */
         foreach ($entries as $entry) {
             $serialized = $entry->jsonSerialize();
-            $data .= '#' . $serialized['entryDate'];
-            $data .= sprintf("\r\n%s\r\n", $serialized['entryContent']);
+            $data .= '# ' . $serialized['entryDate'];
+            $data .= sprintf("\r\n\r\n%s\r\n", $serialized['entryContent']);
         }
         return new DataDownloadResponse($data, 'diary.md', 'text/plain');
+    }
+
+    /**
+     * @return DataDownloadResponse
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     * @throws Exception
+     */
+    public function getPdf(): DataDownloadResponse
+    {
+        $entries = $this->mapper->findAll($this->userId);
+        $data = '';
+        /** @var Entry $entry */
+        foreach ($entries as $entry) {
+            $serialized = $entry->jsonSerialize();
+            $data .= '# ' . $serialized['entryDate'];
+            $data .= sprintf("\r\n\r\n%s\r\n", $serialized['entryContent']);
+        }
+        $converter = new CommonMarkConverter();
+        $data = $converter->convertToHtml($data);
+        return new DataDownloadResponse($data, 'diary.html', 'text/plain');
     }
 }
