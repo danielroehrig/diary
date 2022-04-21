@@ -14,5 +14,6 @@ return [
         ['name' => 'page#get_entry', 'url' => '/entry/{date}', 'verb' => 'GET'],
         ['name' => 'page#update_entry', 'url' => '/entry/{date}', 'verb' => 'PUT'],
         ['name' => 'export#get_markdown', 'url' => '/export/markdown', 'verb' => 'GET'],
+        ['name' => 'export#get_pdf', 'url' => '/export/pdf', 'verb' => 'GET'],
     ]
 ];
