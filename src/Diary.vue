@@ -23,12 +23,12 @@
 								as PDF
 							</template>
 						</ActionButton>
-						<ActionButton icon="icon-delete" @click="alert('Export as Markdown')">
+						<ActionLink icon="icon-delete" :href="markdownDownloadLink">
 							<template #icon>
 								<Markdown :size="20" />
 								as Markdown
 							</template>
-						</ActionButton>
+						</ActionLink>
 					</template>
 				</AppNavigationItem>
 			</template>
@@ -48,11 +48,13 @@ import {
 	DatetimePicker,
 	Button,
 	ActionButton,
+	ActionLink,
 } from '@nextcloud/vue'
 import Editor from './Editor'
 import moment from 'nextcloud-moment'
 import FilePdfBox from 'vue-material-design-icons/FilePdfBox'
 import Markdown from 'vue-material-design-icons/LanguageMarkdown'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
 	name: 'Diary',
@@ -67,6 +69,7 @@ export default {
 		ActionButton,
 		FilePdfBox,
 		Markdown,
+		ActionLink,
 	},
 	props: {
 		date: {
@@ -88,6 +91,10 @@ export default {
 			const nextDay = moment(this.date).add(1, 'day')
 			const today = moment()
 			return nextDay.isBefore(today)
+		},
+		markdownDownloadLink() {
+			const baseUrl = generateUrl('apps/diary')
+			return baseUrl + '/export/markdown'
 		},
 	},
 	methods: {
