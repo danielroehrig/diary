@@ -2,11 +2,10 @@
 
 namespace OCA\Diary\Controller;
 
-use Dompdf\Dompdf;
 use iio\libmergepdf\Merger;
-use League\CommonMark\CommonMarkConverter;
 use OCA\Diary\Db\Entry;
 use OCA\Diary\Db\EntryMapper;
+use OCA\Diary\Service\ExportService;
 use OCP\AppFramework\Http\DataDownloadResponse;
 use OCP\DB\Exception;
 use OCP\IRequest;
@@ -19,12 +18,17 @@ class ExportController extends Controller
      * @var EntryMapper
      */
     private $mapper;
+    /**
+     * @var ExportService
+     */
+    private $exportService;
 
-    public function __construct($AppName, IRequest $request, $UserId, EntryMapper $mapper)
+    public function __construct($AppName, IRequest $request, $UserId, EntryMapper $mapper, ExportService $exportService)
     {
         parent::__construct($AppName, $request);
         $this->userId = $UserId;
         $this->mapper = $mapper;
+        $this->exportService = $exportService;
     }
 
     /**
@@ -58,16 +62,7 @@ class ExportController extends Controller
         $pdfMerger = new Merger();
         /** @var Entry $entry */
         foreach ($entries as $entry) {
-            $pdf = new Dompdf();
-            $pdf->setPaper('A4', 'portrait');
-            $serialized = $entry->jsonSerialize();
-            $data = '# ' . $serialized['entryDate'];
-            $data .= sprintf("\r\n\r\n%s", $serialized['entryContent']);
-            $converter = new CommonMarkConverter();
-            $data = $converter->convertToHtml($data);
-            $pdf->loadHtml($data);
-            $pdf->render();
-            $pdfMerger->addRaw($pdf->output());
+            $pdfMerger->addRaw($this->exportService->entryToPDF($entry));
         }
 
         return new DataDownloadResponse($pdfMerger->merge(), 'diary.pdf', 'text/plain');
