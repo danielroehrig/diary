@@ -2,6 +2,7 @@
 
 namespace OCA\Diary\Controller;
 
+use Dompdf\Dompdf;
 use League\CommonMark\CommonMarkConverter;
 use OCA\Diary\Db\Entry;
 use OCA\Diary\Db\EntryMapper;
@@ -52,6 +53,8 @@ class ExportController extends Controller
      */
     public function getPdf(): DataDownloadResponse
     {
+        $pdf = new Dompdf();
+        $pdf->setPaper('A4', 'portrait');
         $entries = $this->mapper->findAll($this->userId);
         $data = '';
         /** @var Entry $entry */
@@ -62,6 +65,8 @@ class ExportController extends Controller
         }
         $converter = new CommonMarkConverter();
         $data = $converter->convertToHtml($data);
-        return new DataDownloadResponse($data, 'diary.html', 'text/plain');
+        $pdf->loadHtml($data);
+        $pdf->render();
+        return new DataDownloadResponse($pdf->output(), 'diary.pdf', 'text/plain');
     }
 }
