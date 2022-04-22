@@ -3,6 +3,7 @@
 namespace OCA\Diary\Controller;
 
 use Dompdf\Dompdf;
+use iio\libmergepdf\Merger;
 use League\CommonMark\CommonMarkConverter;
 use OCA\Diary\Db\Entry;
 use OCA\Diary\Db\EntryMapper;
@@ -53,20 +54,22 @@ class ExportController extends Controller
      */
     public function getPdf(): DataDownloadResponse
     {
-        $pdf = new Dompdf();
-        $pdf->setPaper('A4', 'portrait');
         $entries = $this->mapper->findAll($this->userId);
-        $data = '';
+        $pdfMerger = new Merger();
         /** @var Entry $entry */
         foreach ($entries as $entry) {
+            $pdf = new Dompdf();
+            $pdf->setPaper('A4', 'portrait');
             $serialized = $entry->jsonSerialize();
-            $data .= '# ' . $serialized['entryDate'];
-            $data .= sprintf("\r\n\r\n%s\r\n", $serialized['entryContent']);
+            $data = '# ' . $serialized['entryDate'];
+            $data .= sprintf("\r\n\r\n%s", $serialized['entryContent']);
+            $converter = new CommonMarkConverter();
+            $data = $converter->convertToHtml($data);
+            $pdf->loadHtml($data);
+            $pdf->render();
+            $pdfMerger->addRaw($pdf->output());
         }
-        $converter = new CommonMarkConverter();
-        $data = $converter->convertToHtml($data);
-        $pdf->loadHtml($data);
-        $pdf->render();
-        return new DataDownloadResponse($pdf->output(), 'diary.pdf', 'text/plain');
+
+        return new DataDownloadResponse($pdfMerger->merge(), 'diary.pdf', 'text/plain');
     }
 }
