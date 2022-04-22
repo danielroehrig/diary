@@ -7,11 +7,15 @@ use iio\libmergepdf\Merger;
 use League\CommonMark\CommonMarkConverter;
 use OCA\Diary\Db\Entry;
 
+/**
+ * Convert entries into multiple formats.
+ */
 class ConversionService
 {
     /**
+     * Convert an array of entries into one PDF encoded as string.
+     *
      * @param array|Entry[] $entries
-     * @return void
      */
     public function entriesToPdf(array $entries): string
     {
@@ -20,59 +24,67 @@ class ConversionService
         foreach ($entries as $entry) {
             $pdfMerger->addRaw($this->entryToPDF($entry));
         }
+
         return $pdfMerger->merge();
     }
 
+    /**
+     * Convert one entry into a PDF encoded as a string.
+     */
     public function entryToPDF(Entry $entry): string
     {
         $data = $this->entryToMarkdown($entry);
         $data = $this->markdownToHTML($data);
+
         return $this->htmlToPDF($data);
     }
 
+    /**
+     * Convert an array of entries into one markdown file.
+     */
     public function entriesToMarkdown(array $entries): string
     {
-        $data = '';
+        $markdownString = '';
         /** @var Entry $entry */
         foreach ($entries as $entry) {
-            $data .= $this->entryToMarkdown($entry);
+            $markdownString .= $this->entryToMarkdown($entry);
         }
-        return $data;
+
+        return $markdownString;
     }
 
     /**
-     * @param Entry $entry
-     * @return string
+     * Convert one entry into a markdown file.
      */
     public function entryToMarkdown(Entry $entry): string
     {
-        $serialized = $entry->jsonSerialize();
-        $data = '# ' . $serialized['entryDate'];
-        $data .= sprintf("\r\n\r\n%s", $serialized['entryContent']);
-        return $data;
+        $serializedEntry = $entry->jsonSerialize();
+        $markdownString = '# '.$serializedEntry['entryDate'];
+        $markdownString .= sprintf("\r\n\r\n%s", $serializedEntry['entryContent']);
+
+        return $markdownString;
     }
 
     /**
-     * @param string $data
-     * @return string
+     * Convert markdown into HTML.
      */
-    public function markdownToHTML(string $data): string
+    public function markdownToHTML(string $markdown): string
     {
         $converter = new CommonMarkConverter();
-        $data = $converter->convertToHtml($data);
-        return $data;
+
+        return $converter->convertToHtml($markdown);
     }
 
     /**
-     * @param string $data
-     * @return string|null
+     * Convert HTML into a PDF encoded as a string.
      */
-    public function htmlToPDF(string $data): ?string
+    public function htmlToPDF(string $html): ?string
     {
         $pdf = new Dompdf();
         $pdf->setPaper('A4', 'portrait');
-        $pdf->loadHtml($data);
+        $pdf->loadHtml($html);
         $pdf->render();
+
         return $pdf->output();
     }
 }

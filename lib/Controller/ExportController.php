@@ -4,11 +4,14 @@ namespace OCA\Diary\Controller;
 
 use OCA\Diary\Db\EntryMapper;
 use OCA\Diary\Service\ConversionService;
+use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataDownloadResponse;
 use OCP\DB\Exception;
 use OCP\IRequest;
-use OCP\AppFramework\Controller;
 
+/**
+ * Download diary entries in multiple formats.
+ */
 class ExportController extends Controller
 {
     private $userId;
@@ -30,29 +33,34 @@ class ExportController extends Controller
     }
 
     /**
-     * @return DataDownloadResponse
+     * Get all entries as one markdown file.
+     *
      * @NoAdminRequired
      * @NoCSRFRequired
+     *
      * @throws Exception
      */
     public function getMarkdown(): DataDownloadResponse
     {
         $entries = $this->mapper->findAll($this->userId);
         $markdownString = $this->exportService->entriesToMarkdown($entries);
+
         return new DataDownloadResponse($markdownString, 'diary.md', 'text/plain');
     }
 
     /**
-     * @return DataDownloadResponse
+     * Get all entries as one PDF file.
+     *
      * @NoAdminRequired
      * @NoCSRFRequired
+     *
      * @throws Exception
      */
     public function getPdf(): DataDownloadResponse
     {
         $entries = $this->mapper->findAll($this->userId);
-
         $pdfString = $this->exportService->entriesToPdf($entries);
+
         return new DataDownloadResponse($pdfString, 'diary.pdf', 'text/plain');
     }
 }
