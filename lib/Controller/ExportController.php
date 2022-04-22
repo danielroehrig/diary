@@ -2,10 +2,8 @@
 
 namespace OCA\Diary\Controller;
 
-use iio\libmergepdf\Merger;
-use OCA\Diary\Db\Entry;
 use OCA\Diary\Db\EntryMapper;
-use OCA\Diary\Service\ExportService;
+use OCA\Diary\Service\ConversionService;
 use OCP\AppFramework\Http\DataDownloadResponse;
 use OCP\DB\Exception;
 use OCP\IRequest;
@@ -19,11 +17,11 @@ class ExportController extends Controller
      */
     private $mapper;
     /**
-     * @var ExportService
+     * @var ConversionService
      */
     private $exportService;
 
-    public function __construct($AppName, IRequest $request, $UserId, EntryMapper $mapper, ExportService $exportService)
+    public function __construct($AppName, IRequest $request, $UserId, EntryMapper $mapper, ConversionService $exportService)
     {
         parent::__construct($AppName, $request);
         $this->userId = $UserId;
@@ -40,14 +38,8 @@ class ExportController extends Controller
     public function getMarkdown(): DataDownloadResponse
     {
         $entries = $this->mapper->findAll($this->userId);
-        $data = '';
-        /** @var Entry $entry */
-        foreach ($entries as $entry) {
-            $serialized = $entry->jsonSerialize();
-            $data .= '# ' . $serialized['entryDate'];
-            $data .= sprintf("\r\n\r\n%s\r\n", $serialized['entryContent']);
-        }
-        return new DataDownloadResponse($data, 'diary.md', 'text/plain');
+        $markdownString = $this->exportService->entriesToMarkdown($entries);
+        return new DataDownloadResponse($markdownString, 'diary.md', 'text/plain');
     }
 
     /**
@@ -59,12 +51,8 @@ class ExportController extends Controller
     public function getPdf(): DataDownloadResponse
     {
         $entries = $this->mapper->findAll($this->userId);
-        $pdfMerger = new Merger();
-        /** @var Entry $entry */
-        foreach ($entries as $entry) {
-            $pdfMerger->addRaw($this->exportService->entryToPDF($entry));
-        }
 
-        return new DataDownloadResponse($pdfMerger->merge(), 'diary.pdf', 'text/plain');
+        $pdfString = $this->exportService->entriesToPdf($entries);
+        return new DataDownloadResponse($pdfString, 'diary.pdf', 'text/plain');
     }
 }
