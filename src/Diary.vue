@@ -17,13 +17,13 @@
 			<template #footer>
 				<AppNavigationItem title="Export" icon="icon-download">
 					<template #actions>
-						<ActionButton icon="icon-edit" @click="alert('Export as PDF')">
+						<ActionLink :href="pdfDownloadLink">
 							<template #icon>
 								<FilePdfBox :size="20" />
 								as PDF
 							</template>
-						</ActionButton>
-						<ActionLink icon="icon-delete" :href="markdownDownloadLink">
+						</ActionLink>
+						<ActionLink :href="markdownDownloadLink">
 							<template #icon>
 								<Markdown :size="20" />
 								as Markdown
@@ -47,7 +47,6 @@ import {
 	AppNavigationItem,
 	DatetimePicker,
 	Button,
-	ActionButton,
 	ActionLink,
 } from '@nextcloud/vue'
 import Editor from './Editor'
@@ -66,7 +65,6 @@ export default {
 		AppNavigationItem,
 		DatetimePicker,
 		Button,
-		ActionButton,
 		FilePdfBox,
 		Markdown,
 		ActionLink,
@@ -78,9 +76,11 @@ export default {
 		},
 	},
 	data() {
+		const baseUrl = generateUrl('apps/diary')
 		return {
 			selectedDate: null,
 			calendarOpen: false,
+			baseUrl,
 		}
 	},
 	computed: {
@@ -93,8 +93,10 @@ export default {
 			return nextDay.isBefore(today)
 		},
 		markdownDownloadLink() {
-			const baseUrl = generateUrl('apps/diary')
-			return baseUrl + '/export/markdown'
+			return this.baseUrl + '/export/markdown'
+		},
+		pdfDownloadLink() {
+			return this.baseUrl + '/export/pdf'
 		},
 	},
 	methods: {
