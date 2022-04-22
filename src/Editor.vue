@@ -127,6 +127,11 @@ export default {
 	color: var(--color-main-text) !important;
 }
 
+.editor-preview {
+	background-color: var(--color-main-background);
+	color: var(--color-main-text);
+}
+
 .CodeMirror {
 	background-color: var(--color-main-background);
 	color: var(--color-main-text);
@@ -139,6 +144,15 @@ export default {
 
 .CodeMirror-cursor {
 	border-color: var(--color-main-text);
+}
+
+.editor-toolbar a.active, .editor-toolbar a:hover {
+	background-color: var(--color-background-hover) !important;
+}
+
+.editor-toolbar.disabled-for-preview a:not(.no-disable) {
+	background-color: var(--color-background-darker) !important;
+	color: var(--color-text-lighter) !important;
 }
 
 #entry-title {
