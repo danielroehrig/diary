@@ -14,6 +14,7 @@
         "iio/libmergepdf": "^4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5.11"
+        "phpunit/phpunit": "^9.5.11",
+        "friendsofphp/php-cs-fixer": "3.2"
     }
 }
