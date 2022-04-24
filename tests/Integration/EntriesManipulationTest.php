@@ -9,10 +9,8 @@ use OCP\AppFramework\App;
 use OCP\AppFramework\Http\DataResponse;
 use PHPUnit\Framework\TestCase;
 
-
 class EntriesManipulationTest extends TestCase
 {
-
     private $userId = 'john';
     private $controller;
     private $mapper;
@@ -36,7 +34,7 @@ class EntriesManipulationTest extends TestCase
         $date = '2022-01-01';
         $content = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam';
         $entry = new Entry();
-        $entry->setId($this->userId . $date);
+        $entry->setId($this->userId.$date);
         $entry->setUid($this->userId);
         $entry->setEntryDate($date);
         $entry->setEntryContent($content);
@@ -51,11 +49,8 @@ class EntriesManipulationTest extends TestCase
         $this->assertEquals($date, $data['entryDate']);
         $this->assertEquals($content, $data['entryContent']);
         $this->assertEquals($this->userId, $data['uid']);
-        $this->assertEquals($this->userId . $date, $data['id']);
+        $this->assertEquals($this->userId.$date, $data['id']);
 
         $this->mapper->delete($entry);
-
-
     }
-
 }

@@ -15,7 +15,7 @@ jobs:
     name: "Release: build, sign and upload the app"
     strategy:
       matrix:
-        php-versions: [ '7.4' ]
+        php-versions: [ '7.3' ]
         nextcloud: [ 'stable22' ]
         database: [ 'sqlite' ]
     steps:

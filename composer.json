@@ -8,8 +8,18 @@
             "name": "Daniel Röhrig"
         }
     ],
-    "require": {},
+    "config": {
+        "platform": {
+            "php": "7.3"
+        }
+    },
+    "require": {
+        "league/commonmark": "1.6.7",
+        "dompdf/dompdf": "^1.2",
+        "iio/libmergepdf": "^4.0"
+    },
     "require-dev": {
-        "phpunit/phpunit": "^9.5.11"
+        "phpunit/phpunit": "^9.5.11",
+        "friendsofphp/php-cs-fixer": "3.4"
     }
 }

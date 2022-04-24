@@ -2,18 +2,36 @@
 	<Content id="diary-content" app-name="diary">
 		<AppNavigation>
 			<div style="display:flex;">
-				<button class="icon icon-view-previous" @click="goPrevDay" />
+				<Button class="icon icon-view-previous" @click="goPrevDay" />
 				<DatetimePicker
 					v-model="selectedDate"
 					class="diary-datetimepicker"
 					type="date"
 					:open="calendarOpen"
 					@change="onDateChange" />
-				<button style="flex-grow: 3" @click="openCalendar">
+				<Button style="flex-grow: 3" @click="openCalendar">
 					{{ formattedDate }}
-				</button>
-				<button v-if="showNextDayButton" class="icon icon-view-next" @click="goNextDay" />
+				</Button>
+				<Button v-if="showNextDayButton" class="icon icon-view-next" @click="goNextDay" />
 			</div>
+			<template #footer>
+				<AppNavigationItem title="Export" icon="icon-download">
+					<template #actions>
+						<ActionLink :href="pdfDownloadLink">
+							<template #icon>
+								<FilePdfBox :size="20" />
+								as PDF
+							</template>
+						</ActionLink>
+						<ActionLink :href="markdownDownloadLink">
+							<template #icon>
+								<Markdown :size="20" />
+								as Markdown
+							</template>
+						</ActionLink>
+					</template>
+				</AppNavigationItem>
+			</template>
 		</AppNavigation>
 		<AppContent>
 			<Editor id="diary-editor" :date="date" />
@@ -22,13 +40,35 @@
 </template>
 
 <script>
-import { AppContent, AppNavigation, Content, DatetimePicker } from '@nextcloud/vue'
+import {
+	AppContent,
+	AppNavigation,
+	Content,
+	AppNavigationItem,
+	DatetimePicker,
+	Button,
+	ActionLink,
+} from '@nextcloud/vue'
 import Editor from './Editor'
 import moment from 'nextcloud-moment'
+import FilePdfBox from 'vue-material-design-icons/FilePdfBox'
+import Markdown from 'vue-material-design-icons/LanguageMarkdown'
+import { generateUrl } from '@nextcloud/router'
 
 export default {
 	name: 'Diary',
-	components: { AppNavigation, Content, Editor, AppContent, DatetimePicker },
+	components: {
+		AppNavigation,
+		Content,
+		Editor,
+		AppContent,
+		AppNavigationItem,
+		DatetimePicker,
+		Button,
+		FilePdfBox,
+		Markdown,
+		ActionLink,
+	},
 	props: {
 		date: {
 			type: String,
@@ -36,9 +76,11 @@ export default {
 		},
 	},
 	data() {
+		const baseUrl = generateUrl('apps/diary')
 		return {
 			selectedDate: null,
 			calendarOpen: false,
+			baseUrl,
 		}
 	},
 	computed: {
@@ -49,6 +91,12 @@ export default {
 			const nextDay = moment(this.date).add(1, 'day')
 			const today = moment()
 			return nextDay.isBefore(today)
+		},
+		markdownDownloadLink() {
+			return this.baseUrl + '/export/markdown'
+		},
+		pdfDownloadLink() {
+			return this.baseUrl + '/export/pdf'
 		},
 	},
 	methods: {
