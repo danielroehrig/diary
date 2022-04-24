@@ -115,8 +115,8 @@ class PageControllerTest extends TestCase
     private function createMockEntry(string $date, string $userId, string $content): Entry
     {
         $entry = new Entry();
-        $entry->setId($this->userId.$date);
-        $entry->setUid($this->userId);
+        $entry->setId($userId.$date);
+        $entry->setUid($userId);
         $entry->setEntryDate($date);
         $entry->setEntryContent($content);
 
