@@ -1,18 +1,7 @@
-# Version 0.0.4 - "I have delivered value... but at what cost"
+# Version 0.0.5 - "Look, I wrote a test, and the test was wrong"
 
-Shout out to [KRAZAM](https://www.youtube.com/watch?v=DYvhC_RdIwQ&t=7s)
+Today I learned I was testing the wrong thing ans also sqlite does not behave like Postgres
 
-### Features
+### Fix
 
-* Export function to download all entries as one markdown file or one PDF (let's see how good this implementation
-  scales)
-
-### UI
-
-* @tecc fixed some colors for dark themes
-
-### DevOps
-
-* Unit Tests on push!
-* Integration Tests on push!
-* I even have code coverage!
+* Export function should now work

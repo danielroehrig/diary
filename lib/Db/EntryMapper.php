@@ -52,7 +52,7 @@ class EntryMapper extends QBMapper
             ->where(
                 $qb->expr()->eq('uid', $qb->createNamedParameter($uid))
             )
-            ->orderBy('date', 'ASC');
+            ->orderBy('entry_date', 'ASC');
 
         return $this->findEntities($qb);
     }
