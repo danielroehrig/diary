@@ -155,6 +155,19 @@ export default {
 	color: var(--color-text-lighter) !important;
 }
 
+.editor-preview ul, .editor-preview ol {
+	margin-left: 2rem;
+}
+
+.editor-preview ul {
+	list-style: disc;
+}
+
+.editor-preview blockquote {
+	border-left: 0.35rem solid var(--color-border);
+	padding-left: 0.95rem;
+}
+
 #entry-title {
 	padding-left: 1em;
 	padding-top: 0.5em;
