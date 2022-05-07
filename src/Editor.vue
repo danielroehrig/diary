@@ -6,7 +6,8 @@
 		</div>
 		<VueSimplemde ref="markdownEditor"
 			v-model="content"
-			:configs="configs" />
+			:configs="configs"
+			preview-class="markdown-body" />
 		<div v-if="isLoading" id="overlay">
 			<div style="margin: auto">
 				<i class="fa fa-spinner fa-spin fa-10x" />
@@ -117,6 +118,7 @@ export default {
 <style lang="css">
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 @import '~simplemde/dist/simplemde.min.css';
+@import '~github-markdown-css';
 
 .editor {
 	padding-left: 3em;
