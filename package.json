@@ -21,6 +21,7 @@
     "@nextcloud/axios": "^1.8.0",
     "@nextcloud/router": "^2.0.0",
     "@nextcloud/vue": "^4.3.0",
+    "github-markdown-css": "^5.1.0",
     "nextcloud-moment": "^0.0.10",
     "vue": "^2.6.14",
     "vue-material-design-icons": "^5.0.0",
