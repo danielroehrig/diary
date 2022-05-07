@@ -39,7 +39,7 @@ export default {
 			configs: {
 				toolbar: ['bold', 'italic', 'strikethrough', 'heading', '|', 'quote', 'unordered-list', 'ordered-list', '|', 'link', '|', 'preview', '|', 'guide'],
 				autoDownloadFontAwesome: false,
-				placeholder: 'Write here (translate that)',
+				placeholder: t('diary', 'Write your entry here'),
 				spellChecker: false,
 				status: false,
 			},
