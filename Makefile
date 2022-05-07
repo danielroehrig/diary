@@ -75,9 +75,9 @@ ifeq (, $(composer))
 	mkdir -p $(build_tools_directory)
 	curl -sS https://getcomposer.org/installer | php
 	mv composer.phar $(build_tools_directory)
-	php $(build_tools_directory)/composer.phar install --prefer-dist
+	php $(build_tools_directory)/composer.phar install --prefer-dist --no-dev
 else
-	composer install --prefer-dist
+	composer install --prefer-dist --no-dev
 endif
 
 # Installs npm dependencies
@@ -158,8 +158,3 @@ appstore:
 	--exclude="../$(app_name)/.*" \
 	--exclude="../$(app_name)/js/.*" \
 	../$(app_name)
-
-.PHONY: test
-test: composer
-	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.xml
-	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml
