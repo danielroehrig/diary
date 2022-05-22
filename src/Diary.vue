@@ -15,18 +15,18 @@
 				<Button v-if="showNextDayButton" class="icon icon-view-next" @click="goNextDay" />
 			</div>
 			<template #footer>
-				<AppNavigationItem title="Export" icon="icon-download">
+				<AppNavigationItem :title="t('diary', 'Export')" icon="icon-download">
 					<template #actions>
 						<ActionLink :href="pdfDownloadLink">
 							<template #icon>
 								<FilePdfBox :size="20" />
-								as PDF
+								{{ t('diary', 'as PDF') }}
 							</template>
 						</ActionLink>
 						<ActionLink :href="markdownDownloadLink">
 							<template #icon>
 								<Markdown :size="20" />
-								as Markdown
+								{{ t('diary', 'as Markdown') }}
 							</template>
 						</ActionLink>
 					</template>
