@@ -1,7 +1,13 @@
-# Version 0.0.5 - "Look, I wrote a test, and the test was wrong"
+# Version 0.0.6 - "What is this CSS everybody keeps talking about?"
 
-Today I learned I was testing the wrong thing ans also sqlite does not behave like Postgres
+Sometimes, you just forget to add a css file and everything looks weird.
 
 ### Fix
 
-* Export function should now work
+* HTML preview should now look more like what you would expect
+
+### Features
+
+* Translations! We are now part of the nextcloud transifex group! Join
+  [here](https://www.transifex.com/nextcloud/nextcloud/dashboard/) if you
+  want to add your language.

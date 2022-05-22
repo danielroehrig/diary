@@ -5,10 +5,10 @@
     <name>Diary</name>
     <summary>A simple diary for Nextcloud - Alpha release</summary>
     <description><![CDATA[Keep your diary in your Nextcloud. Write entries for each day in
-a markdown editor. Use the calendar to jump to any date and edit your entries.
+a Markdown editor. Use the calendar to jump to any date and edit your entries.
 
 Warning! This is a very early alpha release and things are still pretty rough around the edges.]]></description>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <licence>agpl</licence>
     <author mail="mail@danielroehrig.de" homepage="https://www.a-broad-view.com/">Daniel Röhrig</author>
     <namespace>Diary</namespace>
