@@ -1,6 +1,6 @@
 {
   "name": "diary",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "A simple diary for the nextcloud",
   "main": "js/index.js",
   "directories": {
