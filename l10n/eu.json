@@ -1,0 +1,6 @@
+{ "translations": {
+    "Diary" : "Egunkaria",
+    "A simple diary for Nextcloud - Alpha release" : "Nextcloud - Alpha kaleratzeko egunkari sinplea",
+    "Write your entry here" : "Idatzi zure sarrera hemen"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
