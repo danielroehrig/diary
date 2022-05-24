@@ -5,4 +5,4 @@ OC.L10N.register(
     "A simple diary for Nextcloud - Alpha release" : "Un diario semplice per Nextcloud - Rilascio alpha",
     "Write your entry here" : "Scrivi la voce di diario qui"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
