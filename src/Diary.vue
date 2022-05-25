@@ -85,7 +85,7 @@ export default {
 	},
 	computed: {
 		formattedDate() {
-			return this.date
+			return moment(this.date).format('LL')
 		},
 		showNextDayButton() {
 			const nextDay = moment(this.date).add(1, 'day')
