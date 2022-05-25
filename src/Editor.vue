@@ -120,9 +120,8 @@ export default {
 @import '~simplemde/dist/simplemde.min.css';
 @import '~github-markdown-css';
 
-.editor {
-	padding-left: 3em;
-	padding-top: 3em;
+.vue-simplemde {
+	padding-left: 0.5em;
 }
 
 .editor-toolbar a {
@@ -158,7 +157,7 @@ export default {
 }
 
 #entry-title {
-	padding-left: 1em;
+	padding-left: 1.5em;
 	padding-top: 0.5em;
 	font-weight: bold;
 	font-size: larger;
