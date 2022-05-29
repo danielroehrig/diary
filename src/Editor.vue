@@ -51,7 +51,8 @@ export default {
 			return this.$refs.markdownEditor.simplemde
 		},
 		title() {
-			return moment(this.date).format('LL')
+			const day = moment(this.date)
+			return day.format('dddd') + ' - ' + day.format('LL')
 		},
 		unSavedMarker() {
 			return this.unSavedChanges ? '*' : ''
