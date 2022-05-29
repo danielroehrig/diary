@@ -148,6 +148,11 @@ export default {
 	border-color: var(--color-main-text);
 }
 
+.CodeMirror-code {
+	width: unset !important;
+	border: none !important;
+}
+
 .editor-toolbar a.active, .editor-toolbar a:hover {
 	background-color: var(--color-background-hover) !important;
 }
