@@ -3,3 +3,4 @@
 ### Fix
 
 * Move title a bit to the right
+* When using diary on a mobile browser, lines are no longer wrapped after just a few words
