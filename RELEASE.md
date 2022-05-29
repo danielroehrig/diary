@@ -1,5 +1,9 @@
 # Version 0.0.7 - ""
 
+### Feature
+
+* Delete all entries for a user when that user is deleted
+
 ### Fix
 
 * Move title a bit to the right
