@@ -13,6 +13,7 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\DB\Exception;
 use OCP\IRequest;
 use OCP\Util;
+use Psr\Log\LoggerInterface;
 
 class PageController extends Controller
 {
@@ -21,12 +22,17 @@ class PageController extends Controller
      * @var EntryMapper
      */
     private $mapper;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
-    public function __construct($AppName, IRequest $request, $UserId, EntryMapper $mapper)
+    public function __construct($AppName, IRequest $request, $UserId, EntryMapper $mapper, LoggerInterface $logger)
     {
         parent::__construct($AppName, $request);
         $this->userId = $UserId;
         $this->mapper = $mapper;
+        $this->logger = $logger;
     }
 
     /**
@@ -70,6 +76,16 @@ class PageController extends Controller
      */
     public function updateEntry(string $date, string $content): DataResponse
     {
+        if ('' === $content) {
+            try {
+                $entry = $this->mapper->find($this->userId, $date);
+                $this->mapper->delete($entry);
+            } catch (\Exception $e) {
+                $this->logger->warning('Could not delete diary entry: '.$e->getMessage());
+            } finally {
+                return new DataResponse(['isEmpty' => true]);
+            }
+        }
         $content = strip_tags($content);
         $entry = new Entry();
         $entry->setId($this->userId.$date);
