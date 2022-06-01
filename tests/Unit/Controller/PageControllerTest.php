@@ -99,6 +99,20 @@ class PageControllerTest extends TestCase
         $this->assertEquals($entry, $result->getData());
     }
 
+    public function testUpdateEntryFailure()
+    {
+        $entryDate = '2022-08-07';
+        $entryContent = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam';
+        $entry = $this->createMockEntry($entryDate, $this->userId, $entryContent);
+        $this->mapper->expects($this->once())
+            ->method('insertOrUpdate')
+            ->with($this->equalTo($entry))
+            ->will($this->throwException(new \OCP\DB\Exception('Some error while updating')));
+        $result = $this->controller->updateEntry($entryDate, $entryContent);
+        $this->assertEquals(Http::STATUS_INTERNAL_SERVER_ERROR, $result->getStatus());
+        $this->assertEquals(['error' => 'Some error while updating'], $result->getData());
+    }
+
     public function testUpdateEntryDeleteEmpty()
     {
         $entryDate = '2022-08-07';
