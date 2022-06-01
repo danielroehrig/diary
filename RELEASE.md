@@ -3,6 +3,7 @@
 ### Feature
 
 * Delete all entries for a user when that user is deleted
+* Delete entries that have no content
 
 ### Fix
 
