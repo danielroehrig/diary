@@ -81,7 +81,7 @@ class PageController extends Controller
                 $entry = $this->mapper->find($this->userId, $date);
                 $this->mapper->delete($entry);
             } catch (\Exception $e) {
-                $this->logger->warning('Could not delete diary entry: '.$e->getMessage());
+                $this->logger->notice('Could not delete diary entry: '.$e->getMessage());
             } finally {
                 return new DataResponse(['isEmpty' => true]);
             }

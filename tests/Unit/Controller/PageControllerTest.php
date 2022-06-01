@@ -11,6 +11,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class PageControllerTest extends TestCase
 {
@@ -26,9 +27,12 @@ class PageControllerTest extends TestCase
         $this->mapper = $this->getMockBuilder(EntryMapper::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->controller = new PageController(
-            'diary', $request, $this->userId, $this->mapper
+            'diary', $request, $this->userId, $this->mapper, $this->logger
         );
     }
 
@@ -95,18 +99,22 @@ class PageControllerTest extends TestCase
         $this->assertEquals($entry, $result->getData());
     }
 
-    public function testUpdateEntryFailure()
+    public function testUpdateEntryDeleteEmpty()
     {
         $entryDate = '2022-08-07';
-        $entryContent = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam';
+        $entryContent = '';
         $entry = $this->createMockEntry($entryDate, $this->userId, $entryContent);
         $this->mapper->expects($this->once())
-            ->method('insertOrUpdate')
+            ->method('find')
+            ->with($this->userId, $entryDate)
+            ->will($this->returnValue($entry));
+        $this->mapper->expects($this->once())
+            ->method('delete')
             ->with($this->equalTo($entry))
-            ->will($this->throwException(new \OCP\DB\Exception('Some error while updating')));
+            ->will($this->returnValue($entry));
         $result = $this->controller->updateEntry($entryDate, $entryContent);
-        $this->assertEquals(Http::STATUS_INTERNAL_SERVER_ERROR, $result->getStatus());
-        $this->assertEquals(['error' => 'Some error while updating'], $result->getData());
+        $this->assertEquals(Http::STATUS_OK, $result->getStatus());
+        $this->assertEquals(['isEmpty' => true], $result->getData());
     }
 
     /**
