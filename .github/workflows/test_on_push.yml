@@ -12,8 +12,8 @@ jobs:
     name: "Run unit tests"
     strategy:
       matrix:
-        php-versions: [ '7.3' ]
-        nextcloud: [ 'stable22' ]
+        php-versions: [ '7.3', '7.4', '8.0', '8.1' ]
+        nextcloud: [ 'stable22', 'stable23', 'stable24' ]
         database: [ 'sqlite' ]
         phpunit-version: [ '9.5' ]
     steps:
