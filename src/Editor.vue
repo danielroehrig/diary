@@ -51,7 +51,8 @@ export default {
 			return this.$refs.markdownEditor.simplemde
 		},
 		title() {
-			return moment(this.date).format('LL')
+			const day = moment(this.date)
+			return day.format('dddd') + ' - ' + day.format('LL')
 		},
 		unSavedMarker() {
 			return this.unSavedChanges ? '*' : ''
@@ -120,9 +121,8 @@ export default {
 @import '~simplemde/dist/simplemde.min.css';
 @import '~github-markdown-css';
 
-.editor {
-	padding-left: 3em;
-	padding-top: 3em;
+.vue-simplemde {
+	padding-left: 0.5em;
 }
 
 .editor-toolbar a {
@@ -148,6 +148,11 @@ export default {
 	border-color: var(--color-main-text);
 }
 
+.CodeMirror-code {
+	width: unset !important;
+	border: none !important;
+}
+
 .editor-toolbar a.active, .editor-toolbar a:hover {
 	background-color: var(--color-background-hover) !important;
 }
@@ -158,7 +163,7 @@ export default {
 }
 
 #entry-title {
-	padding-left: 1em;
+	padding-left: 1.5em;
 	padding-top: 0.5em;
 	font-weight: bold;
 	font-size: larger;

@@ -4,15 +4,16 @@ namespace OCA\Diary\Controller;
 
 use OCA\Diary\Db\Entry;
 use OCA\Diary\Db\EntryMapper;
+use OCP\AppFramework\Controller;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\TemplateResponse;
 use OCP\DB\Exception;
 use OCP\IRequest;
-use OCP\AppFramework\Http\TemplateResponse;
-use OCP\AppFramework\Controller;
 use OCP\Util;
+use Psr\Log\LoggerInterface;
 
 class PageController extends Controller
 {
@@ -21,12 +22,17 @@ class PageController extends Controller
      * @var EntryMapper
      */
     private $mapper;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
-    public function __construct($AppName, IRequest $request, $UserId, EntryMapper $mapper)
+    public function __construct($AppName, IRequest $request, $UserId, EntryMapper $mapper, LoggerInterface $logger)
     {
         parent::__construct($AppName, $request);
         $this->userId = $UserId;
         $this->mapper = $mapper;
+        $this->logger = $logger;
     }
 
     /**
@@ -34,7 +40,7 @@ class PageController extends Controller
      *          required and no CSRF check. If you don't know what CSRF is, read
      *          it up in the docs or you might create a security hole. This is
      *          basically the only required method to add this exemption, don't
-     *          add it to any other method if you don't exactly know what it does
+     *          add it to any other method if you don't exactly know what it does.
      *
      * @NoAdminRequired
      * @NoCSRFRequired
@@ -42,12 +48,11 @@ class PageController extends Controller
     public function index(): TemplateResponse
     {
         Util::addScript($this->appName, 'diary-main');
+
         return new TemplateResponse('diary', 'index');  // templates/index.php
     }
 
     /**
-     * @param string $date
-     * @return DataResponse
      * @NoAdminRequired
      * @NoCSRFRequired
      */
@@ -56,24 +61,34 @@ class PageController extends Controller
         try {
             $entry = $this->mapper->find($this->userId, $date);
         } catch (DoesNotExistException $e) {
-            return new DataResponse(["isEmpty" => true]);
+            return new DataResponse(['isEmpty' => true]);
         } catch (MultipleObjectsReturnedException|Exception $e) {
             return new DataResponse(['error' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
         }
+
         return new DataResponse($entry);
     }
 
     /**
-     * @param string $date ISO date as identifier
+     * @param string $date    ISO date as identifier
      * @param string $content Diary entry to save
-     * @return DataResponse
      * @NoAdminRequired
      */
     public function updateEntry(string $date, string $content): DataResponse
     {
+        if ('' === $content) {
+            try {
+                $entry = $this->mapper->find($this->userId, $date);
+                $this->mapper->delete($entry);
+            } catch (\Exception $e) {
+                $this->logger->notice('Could not delete diary entry: '.$e->getMessage());
+            } finally {
+                return new DataResponse(['isEmpty' => true]);
+            }
+        }
         $content = strip_tags($content);
         $entry = new Entry();
-        $entry->setId($this->userId . $date);
+        $entry->setId($this->userId.$date);
         $entry->setUid($this->userId);
         $entry->setEntryDate($date);
         $entry->setEntryContent($content);
@@ -84,6 +99,4 @@ class PageController extends Controller
             return new DataResponse(['error' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
         }
     }
-
-
 }

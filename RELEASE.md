@@ -1,13 +1,17 @@
-# Version 0.0.6 - "What is this CSS everybody keeps talking about?"
+# Version 0.0.7 - "Go and clean your room!"
 
-Sometimes, you just forget to add a css file and everything looks weird.
+### Feature
+
+* Delete all entries for a user when that user is deleted
+* Delete entries that have no content
+* Should also work for people who use PHP 8.1 (living on the edge, are we?)
 
 ### Fix
 
-* HTML preview should now look more like what you would expect
+* Move title a bit to the right
+* When using diary on a mobile browser, lines are no longer wrapped after just a few words
 
-### Features
+### Devops
 
-* Translations! We are now part of the nextcloud transifex group! Join
-  [here](https://www.transifex.com/nextcloud/nextcloud/dashboard/) if you
-  want to add your language.
+* Add a more extensive test matrix to the github actions
+* Remove support for nextcloud version 21 and 22 as they have reached end of life

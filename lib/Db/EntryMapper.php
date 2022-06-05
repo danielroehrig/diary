@@ -17,6 +17,8 @@ class EntryMapper extends QBMapper
     }
 
     /**
+     * Find the diary entry for the given user or date.
+     *
      * @return mixed|Entity
      *
      * @throws DoesNotExistException
@@ -38,7 +40,7 @@ class EntryMapper extends QBMapper
     }
 
     /**
-     * @param string $uid
+     * Find all diary entries for the given user id, ordered by date ascending.
      *
      * @return array|Entity[]
      *
@@ -55,5 +57,22 @@ class EntryMapper extends QBMapper
             ->orderBy('entry_date', 'ASC');
 
         return $this->findEntities($qb);
+    }
+
+    /**
+     * Delete all entries for the given user.
+     *
+     * @throws Exception
+     * @returns int Number of deleted entries
+     */
+    public function deleteAllEntriesForUser(string $uid): int
+    {
+        $qb = $this->db->getQueryBuilder();
+        $qb->delete($this->getTableName())
+            ->where(
+                $qb->expr()->eq('uid', $qb->createNamedParameter($uid))
+            );
+
+        return $qb->executeStatement();
     }
 }
