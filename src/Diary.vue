@@ -20,13 +20,13 @@
 						<ActionLink :href="pdfDownloadLink">
 							<template #icon>
 								<FilePdfBox :size="20" />
-								{{ t('diary', 'as PDF') }}
+								{{ t('diary', 'As PDF') }}
 							</template>
 						</ActionLink>
 						<ActionLink :href="markdownDownloadLink">
 							<template #icon>
 								<Markdown :size="20" />
-								{{ t('diary', 'as Markdown') }}
+								{{ t('diary', 'As Markdown') }}
 							</template>
 						</ActionLink>
 					</template>
