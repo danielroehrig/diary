@@ -1,4 +1,5 @@
 { "translations": {
-    "Export" : "Exportieren"
+    "Export" : "Exportieren",
+    "Write your entry here" : "Schreibe hier Deinen Eintrag "
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
