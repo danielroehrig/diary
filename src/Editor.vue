@@ -5,7 +5,7 @@
 			{{ unSavedMarker }}{{ title }}
 		</div>
 		<VueSimplemde ref="markdownEditor"
-			v-model="content"
+			:model-value="content"
 			:configs="configs"
 			preview-class="markdown-body" />
 		<div v-if="isLoading" id="overlay">
@@ -66,11 +66,18 @@ export default {
 	},
 	mounted() {
 		this.simplemde.codemirror.on('change', () => {
-			// A load is a change, so we need to catch this
-			if (this.status === 'loaded') {
+			// A load is a change, so we need to catch this.
+			// We compare the content because switching to a page will trigger the change event TWICE! (Or not at all, if
+			// we don't set the value of the editor to the content). So whenever these values are equal, we did not reach
+			// the other workaround where we manually set the content to the value of the editor.
+			if (this.status === 'loaded' || this.content === this.simplemde.value()) {
 				this.status = 'writing'
 				return
 			}
+			// This line here is SUPER important! Because although simplemde has the model set to this.content, changing
+			// the content in the editor WON'T change the content of the content property. How long did it take me to find
+			// this out? Like two days.
+			this.content = this.simplemde.value()
 			this.unSavedChanges = true
 			clearTimeout(this.timeout)
 			const saveFunction = () => {
