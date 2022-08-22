@@ -24,7 +24,7 @@
     "github-markdown-css": "^5.1.0",
     "nextcloud-moment": "^0.0.10",
     "vue": "^2.6.14",
-    "vue-material-design-icons": "^5.0.0",
+    "vue-material-design-icons": "^5.1.2",
     "vue-router": "^3.5.3",
     "vue-simplemde": "^2.0.1"
   },
