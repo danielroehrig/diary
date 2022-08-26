@@ -2,17 +2,24 @@
 	<Content id="diary-content" app-name="diary">
 		<AppNavigation>
 			<div style="display:flex;">
-				<Button class="icon icon-view-previous" @click="goPrevDay" />
+				<Button class="icon icon-view-previous"
+					style="height: 34px; width: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px"
+					@click="goPrevDay" />
 				<DatetimePicker
 					v-model="selectedDate"
 					class="diary-datetimepicker"
 					type="date"
 					:open="calendarOpen"
 					@change="onDateChange" />
-				<Button style="flex-grow: 3" @click="openCalendar">
+				<Button
+					style="flex-grow: 3; height: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px; font-size: 13px"
+					@click="openCalendar">
 					{{ formattedDate }}
 				</Button>
-				<Button v-if="showNextDayButton" class="icon icon-view-next" @click="goNextDay" />
+				<Button v-if="showNextDayButton"
+					class="icon icon-view-next"
+					style="height: 34px; width: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px"
+					@click="goNextDay" />
 			</div>
 			<template #footer>
 				<AppNavigationItem :title="t('diary', 'Export')" icon="icon-download">
