@@ -60,6 +60,27 @@ class EntryMapper extends QBMapper
     }
 
     /**
+     * Find the last $amount number of entries ordered by date descending.
+     *
+     * @return array|Entity[]
+     *
+     * @throws Exception
+     */
+    public function findLast(string $uid, int $amount): array
+    {
+        $qb = $this->db->getQueryBuilder();
+        $qb->select('*')
+            ->from($this->getTableName())
+            ->where(
+                $qb->expr()->eq('uid', $qb->createNamedParameter($uid))
+            )
+            ->setMaxResults($amount)
+            ->orderBy('entry_date', 'DESC');
+
+        return $this->findEntities($qb);
+    }
+
+    /**
      * Delete all entries for the given user.
      *
      * @throws Exception

@@ -31,7 +31,7 @@
 					counter-type="highlighted"
 					@click="onDateChange(entry.date)">
 					<template #subtitle>
-						{{ entry.excerp }}
+						{{ entry.excerpt }}
 					</template>
 				</ListItem>
 			</ul>
@@ -76,6 +76,7 @@ import moment from 'nextcloud-moment'
 import FilePdfBox from 'vue-material-design-icons/FilePdfBox'
 import Markdown from 'vue-material-design-icons/LanguageMarkdown'
 import { generateUrl } from '@nextcloud/router'
+import axios from '@nextcloud/axios'
 
 export default {
 	name: 'Diary',
@@ -104,16 +105,8 @@ export default {
 			selectedDate: null,
 			calendarOpen: false,
 			baseUrl,
-			lastEntries: [
-				{
-					date: '2022-08-16',
-					excerp: 'In this slot you can put both text and other components such as icons',
-				},
-				{
-					date: '2022-08-13',
-					excerp: 'I am really losing my patience',
-				},
-			],
+			pastEntriesAmount: 10,
+			lastEntries: [],
 		}
 	},
 	computed: {
@@ -131,6 +124,21 @@ export default {
 		pdfDownloadLink() {
 			return this.baseUrl + '/export/pdf'
 		},
+	},
+	mounted() {
+		axios.get(generateUrl('apps/diary/entries/' + this.pastEntriesAmount))
+			.then(response => {
+				if (response.data) {
+					this.lastEntries = response.data
+				} else {
+					this.content = ''
+				}
+			})
+			.catch(error => {
+				// eslint-disable-next-line no-console
+				console.log(error)
+				this.status = 'error'
+			})
 	},
 	methods: {
 		onDateChange(date) {
