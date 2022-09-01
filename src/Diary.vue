@@ -30,9 +30,6 @@
 					:compact="true"
 					counter-type="highlighted"
 					@click="onDateChange(entry.date)">
-					<template #icon>
-						<AppNavigationIconBullet color="0082c9" />
-					</template>
 					<template #subtitle>
 						{{ entry.excerp }}
 					</template>
@@ -72,7 +69,6 @@ import {
 	DatetimePicker,
 	Button,
 	ActionLink,
-	AppNavigationIconBullet,
 	ListItem,
 } from '@nextcloud/vue'
 import Editor from './Editor'
@@ -94,7 +90,6 @@ export default {
 		FilePdfBox,
 		Markdown,
 		ActionLink,
-		AppNavigationIconBullet,
 		ListItem,
 	},
 	props: {
