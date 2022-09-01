@@ -21,20 +21,22 @@
 					style="height: 34px; width: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px"
 					@click="goNextDay" />
 			</div>
-			<ul>
-				<ListItem
-					v-for="entry in lastEntries"
-					:key="entry.date"
-					:title="formatDate(entry.date)"
-					:bold="false"
-					:compact="true"
-					counter-type="highlighted"
-					@click="onDateChange(entry.date)">
-					<template #subtitle>
-						{{ entry.excerpt }}
-					</template>
-				</ListItem>
-			</ul>
+			<template #list>
+				<ul>
+					<ListItem
+						v-for="entry in lastEntries"
+						:key="entry.date"
+						:title="formatDate(entry.date)"
+						:bold="false"
+						:compact="true"
+						counter-type="highlighted"
+						@click="onDateChange(entry.date)">
+						<template #subtitle>
+							{{ entry.excerpt }}
+						</template>
+					</ListItem>
+				</ul>
+			</template>
 			<template #footer>
 				<AppNavigationItem :title="t('diary', 'Export')" icon="icon-download">
 					<template #actions>
