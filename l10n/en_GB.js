@@ -1,6 +1,12 @@
 OC.L10N.register(
     "diary",
     {
-    "Export" : "Export"
+    "Diary" : "Diary",
+    "A simple diary for Nextcloud - Alpha release" : "A simple diary for Nextcloud - Alpha release",
+    "Keep your diary in your Nextcloud. Write entries for each day in\na Markdown editor. Use the calendar to jump to any date and edit your entries.\n\nWarning! This is a very early alpha release and things are still pretty rough around the edges." : "Keep your diary in your Nextcloud. Write entries for each day in\na Markdown editor. Use the calendar to jump to any date and edit your entries.\n\nWarning! This is a very early alpha release and things are still pretty rough around the edges.",
+    "Export" : "Export",
+    "as PDF" : "as PDF",
+    "as Markdown" : "as Markdown",
+    "Write your entry here" : "Write your entry here"
 },
 "nplurals=2; plural=(n != 1);");
