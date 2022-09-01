@@ -21,6 +21,23 @@
 					style="height: 34px; width: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px"
 					@click="goNextDay" />
 			</div>
+			<ul>
+				<ListItem
+					v-for="entry in lastEntries"
+					:key="entry.date"
+					:title="formatDate(entry.date)"
+					:bold="false"
+					:compact="true"
+					counter-type="highlighted"
+					@click="onDateChange(entry.date)">
+					<template #icon>
+						<AppNavigationIconBullet color="0082c9" />
+					</template>
+					<template #subtitle>
+						{{ entry.excerp }}
+					</template>
+				</ListItem>
+			</ul>
 			<template #footer>
 				<AppNavigationItem :title="t('diary', 'Export')" icon="icon-download">
 					<template #actions>
@@ -55,6 +72,8 @@ import {
 	DatetimePicker,
 	Button,
 	ActionLink,
+	AppNavigationIconBullet,
+	ListItem,
 } from '@nextcloud/vue'
 import Editor from './Editor'
 import moment from 'nextcloud-moment'
@@ -75,6 +94,8 @@ export default {
 		FilePdfBox,
 		Markdown,
 		ActionLink,
+		AppNavigationIconBullet,
+		ListItem,
 	},
 	props: {
 		date: {
@@ -88,11 +109,21 @@ export default {
 			selectedDate: null,
 			calendarOpen: false,
 			baseUrl,
+			lastEntries: [
+				{
+					date: '2022-08-16',
+					excerp: 'In this slot you can put both text and other components such as icons',
+				},
+				{
+					date: '2022-08-13',
+					excerp: 'I am really losing my patience',
+				},
+			],
 		}
 	},
 	computed: {
 		formattedDate() {
-			return moment(this.date).format('LL')
+			return this.formatDate(this.date)
 		},
 		showNextDayButton() {
 			const nextDay = moment(this.date).add(1, 'day')
@@ -122,6 +153,9 @@ export default {
 			const tomorrow = moment(this.date).add(1, 'day')
 			this.$router.push({ name: 'date', params: { date: tomorrow.format('YYYY-MM-DD') } })
 		},
+		formatDate(date) {
+			return moment(date).format('LL')
+		},
 	},
 }
 </script>
@@ -140,4 +174,5 @@ export default {
 .editor-toolbar {
 	border: none;
 }
+
 </style>
