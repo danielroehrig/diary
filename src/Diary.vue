@@ -128,24 +128,13 @@ export default {
 		},
 	},
 	mounted() {
-		axios.get(generateUrl('apps/diary/entries/' + this.pastEntriesAmount))
-			.then(response => {
-				if (response.data) {
-					this.lastEntries = response.data
-				} else {
-					this.content = ''
-				}
-			})
-			.catch(error => {
-				// eslint-disable-next-line no-console
-				console.log(error)
-				this.status = 'error'
-			})
+		this.fetchPastEntries()
 	},
 	methods: {
 		onDateChange(date) {
 			this.$router.push({ name: 'date', params: { date: moment(date).format('YYYY-MM-DD') } })
 			this.calendarOpen = false
+			this.fetchPastEntries()
 		},
 		openCalendar() {
 			this.calendarOpen = !this.calendarOpen
@@ -153,13 +142,30 @@ export default {
 		goPrevDay() {
 			const yesterday = moment(this.date).subtract(1, 'day')
 			this.$router.push({ name: 'date', params: { date: yesterday.format('YYYY-MM-DD') } })
+			this.fetchPastEntries()
 		},
 		goNextDay() {
 			const tomorrow = moment(this.date).add(1, 'day')
 			this.$router.push({ name: 'date', params: { date: tomorrow.format('YYYY-MM-DD') } })
+			this.fetchPastEntries()
 		},
 		formatDate(date) {
 			return moment(date).format('LL')
+		},
+		fetchPastEntries() {
+			axios.get(generateUrl('apps/diary/entries/' + this.pastEntriesAmount))
+				.then(response => {
+					if (response.data) {
+						this.lastEntries = response.data
+					} else {
+						this.content = ''
+					}
+				})
+				.catch(error => {
+					// eslint-disable-next-line no-console
+					console.log(error)
+					this.status = 'error'
+				})
 		},
 	},
 }
