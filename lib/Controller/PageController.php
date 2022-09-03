@@ -84,7 +84,7 @@ class PageController extends Controller
             return new DataResponse(['error' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
         }
         $response = array_map(static function ($entry) {
-            return ['date' => $entry->getEntryDate(), 'excerpt' => $entry->getEntryContent()];
+            return ['date' => $entry->getEntryDate(), 'excerpt' => substr($entry->getEntryContent(), 0, 40)];
         }, $entries);
 
         return new DataResponse($response);
