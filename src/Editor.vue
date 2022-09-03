@@ -89,6 +89,10 @@ export default {
 				axios.put(generateUrl('apps/diary/entry/' + this.date), payload)
 					.then(response => {
 						this.unSavedChanges = false
+
+						if (response.data.isEmpty || response.data.isNew) {
+							this.$emit('reload-entries')
+						}
 					})
 					.catch(error => {
 						// TODO Show alert box with error

@@ -57,7 +57,7 @@
 			</template>
 		</AppNavigation>
 		<AppContent>
-			<Editor id="diary-editor" :date="date" />
+			<Editor id="diary-editor" :date="date" @reload-entries="fetchPastEntries" />
 		</AppContent>
 	</content>
 </template>
@@ -134,7 +134,6 @@ export default {
 		onDateChange(date) {
 			this.$router.push({ name: 'date', params: { date: moment(date).format('YYYY-MM-DD') } })
 			this.calendarOpen = false
-			this.fetchPastEntries()
 		},
 		openCalendar() {
 			this.calendarOpen = !this.calendarOpen
@@ -142,12 +141,10 @@ export default {
 		goPrevDay() {
 			const yesterday = moment(this.date).subtract(1, 'day')
 			this.$router.push({ name: 'date', params: { date: yesterday.format('YYYY-MM-DD') } })
-			this.fetchPastEntries()
 		},
 		goNextDay() {
 			const tomorrow = moment(this.date).add(1, 'day')
 			this.$router.push({ name: 'date', params: { date: tomorrow.format('YYYY-MM-DD') } })
-			this.fetchPastEntries()
 		},
 		formatDate(date) {
 			return moment(date).format('LL')
