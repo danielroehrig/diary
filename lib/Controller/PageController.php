@@ -115,17 +115,9 @@ class PageController extends Controller
         $entry->setEntryContent($content);
 
         try {
-            return new DataResponse(['entry' => $this->mapper->insert($entry), 'isNew' => true]);
-        } catch (Exception $ex) {
-            if (Exception::REASON_UNIQUE_CONSTRAINT_VIOLATION === $ex->getReason()) {
-                try {
-                    return new DataResponse(['entry' => $this->mapper->update($entry), 'isNew' => false]);
-                } catch (Exception $e) {
-                    return new DataResponse(['error' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
-                }
-            }
-
-            return new DataResponse(['error' => $ex->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
+            return new DataResponse($this->mapper->insertOrUpdate($entry));
+        } catch (Exception $e) {
+            return new DataResponse(['error' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
         }
     }
 }
