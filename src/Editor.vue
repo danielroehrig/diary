@@ -89,6 +89,7 @@ export default {
 				axios.put(generateUrl('apps/diary/entry/' + this.date), payload)
 					.then(response => {
 						this.unSavedChanges = false
+						this.$emit('entry-edit', this.date, response.data.isEmpty ? false : response.data.entryContent)
 					})
 					.catch(error => {
 						// TODO Show alert box with error

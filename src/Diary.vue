@@ -57,7 +57,7 @@
 			</template>
 		</AppNavigation>
 		<AppContent>
-			<Editor id="diary-editor" :date="date" />
+			<Editor id="diary-editor" :date="date" @entry-edit="onEdit" />
 		</AppContent>
 	</content>
 </template>
@@ -148,6 +148,20 @@ export default {
 			const tomorrow = moment(this.date).add(1, 'day')
 			this.$router.push({ name: 'date', params: { date: tomorrow.format('YYYY-MM-DD') } })
 			this.fetchPastEntries()
+		},
+		onEdit(date, content) {
+			// eslint-disable-next-line no-console
+			console.log(date + ' ' + content)
+			const entryIndex = this.lastEntries.findIndex((e) => e.date === date)
+			if (entryIndex === -1) {
+				this.lastEntries.unshift({ date, excerpt: content })
+			} else {
+				if (content) {
+					this.lastEntries[entryIndex].excerpt = content.substring(0, 40)
+				} else {
+					this.lastEntries.splice(entryIndex, 1)
+				}
+			}
 		},
 		formatDate(date) {
 			return moment(date).format('LL')
