@@ -150,8 +150,6 @@ export default {
 			this.fetchPastEntries()
 		},
 		onEdit(date, content) {
-			// eslint-disable-next-line no-console
-			console.log(date + ' ' + content)
 			const entryIndex = this.lastEntries.findIndex((e) => e.date === date)
 			if (entryIndex === -1) {
 				this.lastEntries.unshift({ date, excerpt: content })
