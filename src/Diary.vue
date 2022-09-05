@@ -30,7 +30,10 @@
 						:bold="false"
 						:compact="true"
 						counter-type="highlighted"
-						@click="onDateChange(entry.date)">
+						@click="!isCurrentDate(entry.date) ? onDateChange(entry.date) : null">
+						<template v-if="isCurrentDate(entry.date)" #icon>
+							<AppNavigationIconBullet color="0082c9" />
+						</template>
 						<template #subtitle>
 							{{ entry.excerpt }}
 						</template>
@@ -71,6 +74,7 @@ import {
 	DatetimePicker,
 	Button,
 	ActionLink,
+	AppNavigationIconBullet,
 	ListItem,
 } from '@nextcloud/vue'
 import Editor from './Editor'
@@ -93,6 +97,7 @@ export default {
 		FilePdfBox,
 		Markdown,
 		ActionLink,
+		AppNavigationIconBullet,
 		ListItem,
 	},
 	props: {
@@ -135,6 +140,9 @@ export default {
 			this.$router.push({ name: 'date', params: { date: moment(date).format('YYYY-MM-DD') } })
 			this.calendarOpen = false
 			this.fetchPastEntries()
+		},
+		isCurrentDate(date) {
+			return this.date === date
 		},
 		openCalendar() {
 			this.calendarOpen = !this.calendarOpen
