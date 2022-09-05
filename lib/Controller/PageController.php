@@ -70,6 +70,27 @@ class PageController extends Controller
     }
 
     /**
+     * @param int $amount Number of past entries to fetch
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function getLastEntries(int $amount): DataResponse
+    {
+        try {
+            $entries = $this->mapper->findLast($this->userId, $amount);
+        } catch (DoesNotExistException $e) {
+            return new DataResponse(['isEmpty' => true]);
+        } catch (MultipleObjectsReturnedException|Exception $e) {
+            return new DataResponse(['error' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
+        }
+        $response = array_map(static function ($entry) {
+            return ['date' => $entry->getEntryDate(), 'excerpt' => substr($entry->getEntryContent(), 0, 40)];
+        }, $entries);
+
+        return new DataResponse($response);
+    }
+
+    /**
      * @param string $date    ISO date as identifier
      * @param string $content Diary entry to save
      * @NoAdminRequired

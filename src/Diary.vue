@@ -21,6 +21,26 @@
 					style="height: 34px; width: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px"
 					@click="goNextDay" />
 			</div>
+			<template #list>
+				<ul>
+					<ListItem
+						v-for="entry in lastEntries"
+						:key="entry.date"
+						:title="formatDate(entry.date)"
+						:bold="false"
+						:compact="true"
+						counter-type="highlighted"
+						@click="!isCurrentDate(entry.date) ? onDateChange(entry.date) : null">
+						<template #icon>
+							<AppNavigationIconBullet v-if="isCurrentDate(entry.date)" color="0082c9" />
+							<AppNavigationIconBullet v-else color="FFFFFF" />
+						</template>
+						<template #subtitle>
+							{{ entry.excerpt }}
+						</template>
+					</ListItem>
+				</ul>
+			</template>
 			<template #footer>
 				<AppNavigationItem :title="t('diary', 'Export')" icon="icon-download">
 					<template #actions>
@@ -41,7 +61,7 @@
 			</template>
 		</AppNavigation>
 		<AppContent>
-			<Editor id="diary-editor" :date="date" />
+			<Editor id="diary-editor" :date="date" @entry-edit="onEdit" />
 		</AppContent>
 	</content>
 </template>
@@ -55,12 +75,15 @@ import {
 	DatetimePicker,
 	Button,
 	ActionLink,
+	AppNavigationIconBullet,
+	ListItem,
 } from '@nextcloud/vue'
 import Editor from './Editor'
 import moment from 'nextcloud-moment'
 import FilePdfBox from 'vue-material-design-icons/FilePdfBox'
 import Markdown from 'vue-material-design-icons/LanguageMarkdown'
 import { generateUrl } from '@nextcloud/router'
+import axios from '@nextcloud/axios'
 
 export default {
 	name: 'Diary',
@@ -75,6 +98,8 @@ export default {
 		FilePdfBox,
 		Markdown,
 		ActionLink,
+		AppNavigationIconBullet,
+		ListItem,
 	},
 	props: {
 		date: {
@@ -88,11 +113,13 @@ export default {
 			selectedDate: null,
 			calendarOpen: false,
 			baseUrl,
+			pastEntriesAmount: 10,
+			lastEntries: [],
 		}
 	},
 	computed: {
 		formattedDate() {
-			return moment(this.date).format('LL')
+			return this.formatDate(this.date)
 		},
 		showNextDayButton() {
 			const nextDay = moment(this.date).add(1, 'day')
@@ -106,10 +133,17 @@ export default {
 			return this.baseUrl + '/export/pdf'
 		},
 	},
+	mounted() {
+		this.fetchPastEntries()
+	},
 	methods: {
 		onDateChange(date) {
 			this.$router.push({ name: 'date', params: { date: moment(date).format('YYYY-MM-DD') } })
 			this.calendarOpen = false
+			this.fetchPastEntries()
+		},
+		isCurrentDate(date) {
+			return this.date === date
 		},
 		openCalendar() {
 			this.calendarOpen = !this.calendarOpen
@@ -117,10 +151,42 @@ export default {
 		goPrevDay() {
 			const yesterday = moment(this.date).subtract(1, 'day')
 			this.$router.push({ name: 'date', params: { date: yesterday.format('YYYY-MM-DD') } })
+			this.fetchPastEntries()
 		},
 		goNextDay() {
 			const tomorrow = moment(this.date).add(1, 'day')
 			this.$router.push({ name: 'date', params: { date: tomorrow.format('YYYY-MM-DD') } })
+			this.fetchPastEntries()
+		},
+		onEdit(date, content) {
+			const entryIndex = this.lastEntries.findIndex((e) => e.date === date)
+			if (entryIndex === -1) {
+				this.lastEntries.unshift({ date, excerpt: content })
+			} else {
+				if (content) {
+					this.lastEntries[entryIndex].excerpt = content.substring(0, 40)
+				} else {
+					this.lastEntries.splice(entryIndex, 1)
+				}
+			}
+		},
+		formatDate(date) {
+			return moment(date).format('LL')
+		},
+		fetchPastEntries() {
+			axios.get(generateUrl('apps/diary/entries/' + this.pastEntriesAmount))
+				.then(response => {
+					if (response.data) {
+						this.lastEntries = response.data
+					} else {
+						this.content = ''
+					}
+				})
+				.catch(error => {
+					// eslint-disable-next-line no-console
+					console.log(error)
+					this.status = 'error'
+				})
 		},
 	},
 }
@@ -140,4 +206,5 @@ export default {
 .editor-toolbar {
 	border: none;
 }
+
 </style>

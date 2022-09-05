@@ -1,6 +1,12 @@
-# Version 0.0.8 - "Title pending"
+# Version 0.0.8 - "Blast from the past"
+
+Wouldn't it be nice to see your last entries and just know how diligent
+you were with keeping a diary? Well, now you can! On the left side you'll
+see the last 10 entries. You can even click them.
 
 ### Feature
+
+* Show the last 10 entries on the left side.
 
 ### Fix
 

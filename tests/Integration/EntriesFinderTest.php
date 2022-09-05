@@ -129,6 +129,15 @@ class EntriesFinderTest extends TestCase
         $this->assertEquals($content4, $data['entryContent']);
         $this->assertEquals($this->userId, $data['uid']);
         $this->assertEquals($this->userId.$date3, $data['id']);
+        
+        $lastInsert = $insertedEntries = $this->mapper->findLast($this->userId,1);
+        $this->assertEquals($entry4->getEntryDate(), $lastInsert[0]->getEntryDate());
+
+        $lastThreeInserts = $insertedEntries = $this->mapper->findLast($this->userId,3);
+        $this->assertCount(3, $lastThreeInserts);
+        $this->assertEquals($entry4->getEntryDate(), $lastThreeInserts[0]->getEntryDate());
+        $this->assertEquals($entry->getEntryDate(), $lastThreeInserts[1]->getEntryDate());
+        $this->assertEquals($entry3->getEntryDate(), $lastThreeInserts[2]->getEntryDate());
 
         $this->mapper->delete($entry);
         $this->mapper->delete($entry2);
