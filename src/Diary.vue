@@ -31,8 +31,9 @@
 						:compact="true"
 						counter-type="highlighted"
 						@click="!isCurrentDate(entry.date) ? onDateChange(entry.date) : null">
-						<template v-if="isCurrentDate(entry.date)" #icon>
-							<AppNavigationIconBullet color="0082c9" />
+						<template #icon>
+							<AppNavigationIconBullet v-if="isCurrentDate(entry.date)" color="0082c9" />
+							<AppNavigationIconBullet v-else color="FFFFFF" />
 						</template>
 						<template #subtitle>
 							{{ entry.excerpt }}
