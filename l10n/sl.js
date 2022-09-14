@@ -1,6 +1,11 @@
 OC.L10N.register(
     "diary",
     {
-    "Export" : "Izvozi"
+    "Diary" : "Dnevnik",
+    "A simple diary for Nextcloud - Alpha release" : "Enostaven dnevnik za okolje Nextcloud – različica Alfa",
+    "Keep your diary in your Nextcloud. Write entries for each day in\na Markdown editor. Use the calendar to jump to any date and edit your entries.\n\nWarning! This is a very early alpha release and things are still pretty rough around the edges." : "Dnevnik lahko shranjujete tudi v oblak. Vpisovanje je enostavno v urejevalniku Markdown, v koledarju pa lahko skočite na poljuben dan in uredite vpise.\n\nOpozorilo! Program je trenutno v razvojni različici in delovanje še ni povsem ustrezno.",
+    "Export" : "Izvozi",
+    "as PDF" : "kot PDF",
+    "as Markdown" : "v zapisu Markdown"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");
