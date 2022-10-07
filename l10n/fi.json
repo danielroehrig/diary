@@ -1,4 +1,6 @@
 { "translations": {
-    "Export" : "Vie"
+    "Export" : "Vie",
+    "as PDF" : "PDF:ksi",
+    "as Markdown" : "Markdownina"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
