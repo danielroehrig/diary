@@ -4,6 +4,7 @@ namespace OCA\Diary\Db;
 
 use JsonSerializable;
 use OCP\AppFramework\Db\Entity;
+use ReturnTypeWillChange;
 
 class Entry extends Entity implements JsonSerializable
 {
@@ -23,7 +24,8 @@ class Entry extends Entity implements JsonSerializable
     /**
      * @inheritDoc
      */
-    public function jsonSerialize(): mixed
+    #[ReturnTypeWillChange]
+    public function jsonSerialize()
     {
         return [
             'id' => $this->id,
