@@ -5,3 +5,7 @@ I... have so much else to do. But Nextcloud 25 is out now so... I need to at lea
 ### Feature
 
 * Support for Nextcloud 25
+
+### Internal
+
+* Updating some packages
