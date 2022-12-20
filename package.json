@@ -1,6 +1,6 @@
 {
   "name": "diary",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A simple diary for the nextcloud",
   "main": "js/index.js",
   "directories": {
@@ -21,8 +21,8 @@
     "@nextcloud/axios": "^2.0.0",
     "@nextcloud/router": "^2.0.0",
     "@nextcloud/vue": "^5.4.0",
+    "@nextcloud/moment": "^1.2.1",
     "github-markdown-css": "^5.1.0",
-    "nextcloud-moment": "^0.0.10",
     "vue": "^2.6.14",
     "vue-material-design-icons": "^5.1.2",
     "vue-router": "^3.6.0",
