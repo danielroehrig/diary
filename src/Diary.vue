@@ -1,29 +1,29 @@
 <template>
-	<Content id="diary-content" app-name="diary">
-		<AppNavigation>
+	<NcContent id="diary-content" app-name="diary">
+		<NcAppNavigation>
 			<div style="display:flex;">
-				<Button class="icon icon-view-previous"
+				<NcButton class="icon icon-view-previous"
 					style="height: 34px; width: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px"
 					@click="goPrevDay" />
-				<DatetimePicker
+				<NcDatetimePicker
 					v-model="selectedDate"
 					class="diary-datetimepicker"
 					type="date"
 					:open="calendarOpen"
 					@change="onDateChange" />
-				<Button
+				<NcButton
 					style="flex-grow: 3; height: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px; font-size: 13px"
 					@click="openCalendar">
 					{{ formattedDate }}
-				</Button>
-				<Button v-if="showNextDayButton"
+				</NcButton>
+				<NcButton v-if="showNextDayButton"
 					class="icon icon-view-next"
 					style="height: 34px; width: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px"
 					@click="goNextDay" />
 			</div>
 			<template #list>
 				<ul>
-					<ListItem
+					<NcListItem
 						v-for="entry in lastEntries"
 						:key="entry.date"
 						:title="formatDate(entry.date)"
@@ -32,54 +32,54 @@
 						counter-type="highlighted"
 						@click="!isCurrentDate(entry.date) ? onDateChange(entry.date) : null">
 						<template #icon>
-							<AppNavigationIconBullet v-if="isCurrentDate(entry.date)" color="0082c9" />
-							<AppNavigationIconBullet v-else color="FFFFFF" />
+							<NcAppNavigationIconBullet v-if="isCurrentDate(entry.date)" color="0082c9" />
+							<NcAppNavigationIconBullet v-else color="FFFFFF" />
 						</template>
 						<template #subtitle>
 							{{ entry.excerpt }}
 						</template>
-					</ListItem>
+					</NcListItem>
 				</ul>
 			</template>
 			<template #footer>
-				<AppNavigationItem :title="t('diary', 'Export')" icon="icon-download">
+				<NcAppNavigationItem :title="t('diary', 'Export')" icon="icon-download">
 					<template #actions>
-						<ActionLink :href="pdfDownloadLink">
+						<NcActionLink :href="pdfDownloadLink">
 							<template #icon>
 								<FilePdfBox :size="20" />
 								{{ t('diary', 'as PDF') }}
 							</template>
-						</ActionLink>
-						<ActionLink :href="markdownDownloadLink">
+						</NcActionLink>
+						<NcActionLink :href="markdownDownloadLink">
 							<template #icon>
 								<Markdown :size="20" />
 								{{ t('diary', 'as Markdown') }}
 							</template>
-						</ActionLink>
+						</NcActionLink>
 					</template>
-				</AppNavigationItem>
+				</NcAppNavigationItem>
 			</template>
-		</AppNavigation>
-		<AppContent>
+		</NcAppNavigation>
+		<NcAppContent>
 			<Editor id="diary-editor" :date="date" @entry-edit="onEdit" />
-		</AppContent>
-	</content>
+		</NcAppContent>
+	</NcContent>
 </template>
 
 <script>
 import {
-	AppContent,
-	AppNavigation,
-	Content,
-	AppNavigationItem,
-	DatetimePicker,
-	Button,
-	ActionLink,
-	AppNavigationIconBullet,
-	ListItem,
+	NcAppContent,
+	NcAppNavigation,
+	NcContent,
+	NcAppNavigationItem,
+	NcDatetimePicker,
+	NcButton,
+	NcActionLink,
+	NcAppNavigationIconBullet,
+	NcListItem,
 } from '@nextcloud/vue'
 import Editor from './Editor'
-import moment from 'nextcloud-moment'
+import moment from '@nextcloud/moment'
 import FilePdfBox from 'vue-material-design-icons/FilePdfBox'
 import Markdown from 'vue-material-design-icons/LanguageMarkdown'
 import { generateUrl } from '@nextcloud/router'
@@ -88,18 +88,18 @@ import axios from '@nextcloud/axios'
 export default {
 	name: 'Diary',
 	components: {
-		AppNavigation,
-		Content,
+		NcAppNavigation,
+		NcContent,
 		Editor,
-		AppContent,
-		AppNavigationItem,
-		DatetimePicker,
-		Button,
+		NcAppContent,
+		NcAppNavigationItem,
+		NcDatetimePicker,
+		NcButton,
 		FilePdfBox,
 		Markdown,
-		ActionLink,
-		AppNavigationIconBullet,
-		ListItem,
+		NcActionLink,
+		NcAppNavigationIconBullet,
+		NcListItem,
 	},
 	props: {
 		date: {

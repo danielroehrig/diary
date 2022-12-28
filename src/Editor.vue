@@ -20,7 +20,7 @@ import VueSimplemde from 'vue-simplemde'
 
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import moment from 'nextcloud-moment'
+import moment from '@nextcloud/moment'
 
 export default {
 	name: 'Editor',
