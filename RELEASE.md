@@ -1,18 +1,12 @@
-# Version 0.0.8 - "Blast from the past"
+# Version 0.0.9 - "Just the bare minimum"
 
-Wouldn't it be nice to see your last entries and just know how diligent
-you were with keeping a diary? Well, now you can! On the left side you'll
-see the last 10 entries. You can even click them.
+I... have so much else to do. But Nextcloud 25 is out now so... I need to at least make it compatible, right? Right?
+Thanks to @kylecoberly for fixing the CSS for 25 for me.
 
 ### Feature
 
-* Show the last 10 entries on the left side.
-
-### Fix
-
-* Going back and forth between the days always triggered a save even when no change was made. And there was the
-  possibility that one could overwrite entries.
+* Support for Nextcloud 25
 
 ### Internal
 
-* Updated __a lot__ of packages
+* Updating some packages

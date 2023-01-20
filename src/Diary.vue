@@ -1,29 +1,27 @@
 <template>
-	<Content id="diary-content" app-name="diary">
-		<AppNavigation>
-			<div style="display:flex;">
-				<Button class="icon icon-view-previous"
-					style="height: 34px; width: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px"
+	<NcContent id="diary-content" app-name="diary">
+		<NcAppNavigation>
+			<div class="navigation-wrapper">
+				<NcButton class="icon icon-view-previous"
 					@click="goPrevDay" />
-				<DatetimePicker
+				<NcDatetimePicker
 					v-model="selectedDate"
 					class="diary-datetimepicker"
 					type="date"
 					:open="calendarOpen"
 					@change="onDateChange" />
-				<Button
-					style="flex-grow: 3; height: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px; font-size: 13px"
+				<NcButton
+					class="open-calendar"
 					@click="openCalendar">
 					{{ formattedDate }}
-				</Button>
-				<Button v-if="showNextDayButton"
+				</NcButton>
+				<NcButton v-if="showNextDayButton"
 					class="icon icon-view-next"
-					style="height: 34px; width: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px"
 					@click="goNextDay" />
 			</div>
 			<template #list>
 				<ul>
-					<ListItem
+					<NcListItem
 						v-for="entry in lastEntries"
 						:key="entry.date"
 						:title="formatDate(entry.date)"
@@ -32,54 +30,54 @@
 						counter-type="highlighted"
 						@click="!isCurrentDate(entry.date) ? onDateChange(entry.date) : null">
 						<template #icon>
-							<AppNavigationIconBullet v-if="isCurrentDate(entry.date)" color="0082c9" />
-							<AppNavigationIconBullet v-else color="FFFFFF" />
+							<NcAppNavigationIconBullet v-if="isCurrentDate(entry.date)" color="0082c9" />
+							<NcAppNavigationIconBullet v-else color="FFFFFF" />
 						</template>
 						<template #subtitle>
 							{{ entry.excerpt }}
 						</template>
-					</ListItem>
+					</NcListItem>
 				</ul>
 			</template>
 			<template #footer>
-				<AppNavigationItem :title="t('diary', 'Export')" icon="icon-download">
+				<NcAppNavigationItem class="export" :title="t('diary', 'Export')" icon="icon-download">
 					<template #actions>
-						<ActionLink :href="pdfDownloadLink">
+						<NcActionLink :href="pdfDownloadLink">
 							<template #icon>
 								<FilePdfBox :size="20" />
 								{{ t('diary', 'as PDF') }}
 							</template>
-						</ActionLink>
-						<ActionLink :href="markdownDownloadLink">
+						</NcActionLink>
+						<NcActionLink :href="markdownDownloadLink">
 							<template #icon>
 								<Markdown :size="20" />
 								{{ t('diary', 'as Markdown') }}
 							</template>
-						</ActionLink>
+						</NcActionLink>
 					</template>
-				</AppNavigationItem>
+				</NcAppNavigationItem>
 			</template>
-		</AppNavigation>
-		<AppContent>
-			<Editor id="diary-editor" :date="date" @entry-edit="onEdit" />
-		</AppContent>
-	</content>
+		</NcAppNavigation>
+		<NcAppContent>
+			<Editor :date="date" @entry-edit="onEdit" />
+		</NcAppContent>
+	</NcContent>
 </template>
 
 <script>
 import {
-	AppContent,
-	AppNavigation,
-	Content,
-	AppNavigationItem,
-	DatetimePicker,
-	Button,
-	ActionLink,
-	AppNavigationIconBullet,
-	ListItem,
+	NcAppContent,
+	NcAppNavigation,
+	NcContent,
+	NcAppNavigationItem,
+	NcDatetimePicker,
+	NcButton,
+	NcActionLink,
+	NcAppNavigationIconBullet,
+	NcListItem,
 } from '@nextcloud/vue'
 import Editor from './Editor'
-import moment from 'nextcloud-moment'
+import moment from '@nextcloud/moment'
 import FilePdfBox from 'vue-material-design-icons/FilePdfBox'
 import Markdown from 'vue-material-design-icons/LanguageMarkdown'
 import { generateUrl } from '@nextcloud/router'
@@ -88,18 +86,18 @@ import axios from '@nextcloud/axios'
 export default {
 	name: 'Diary',
 	components: {
-		AppNavigation,
-		Content,
+		NcAppNavigation,
+		NcContent,
 		Editor,
-		AppContent,
-		AppNavigationItem,
-		DatetimePicker,
-		Button,
+		NcAppContent,
+		NcAppNavigationItem,
+		NcDatetimePicker,
+		NcButton,
 		FilePdfBox,
 		Markdown,
-		ActionLink,
-		AppNavigationIconBullet,
-		ListItem,
+		NcActionLink,
+		NcAppNavigationIconBullet,
+		NcListItem,
 	},
 	props: {
 		date: {
@@ -191,20 +189,29 @@ export default {
 	},
 }
 </script>
-<style>
+
+<style lang="scss">
 #diary-content {
-	width: 100%;
-	padding-top: 0;
+  margin: 0;
+  height: calc(100% - 50px);
+  width: inherit;
+  .navigation-wrapper {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px;
+    .diary-datetimepicker {
+      width: 0; // Hides drop-down
+      .mx-input-wrapper {
+        display: none;
+      }
+    }
+    .open-calendar {
+      flex-grow: 3;
+      font-size: 14px;
+    }
+  }
+  .export {
+    padding: 12px;
+  }
 }
-
-#diary-editor {
-	width: 100%;
-	max-width: 800px;
-	padding-left: 20px;
-}
-
-.editor-toolbar {
-	border: none;
-}
-
 </style>

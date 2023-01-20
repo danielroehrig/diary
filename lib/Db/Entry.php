@@ -4,6 +4,7 @@ namespace OCA\Diary\Db;
 
 use JsonSerializable;
 use OCP\AppFramework\Db\Entity;
+use ReturnTypeWillChange;
 
 class Entry extends Entity implements JsonSerializable
 {
@@ -23,6 +24,7 @@ class Entry extends Entity implements JsonSerializable
     /**
      * @inheritDoc
      */
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return [
