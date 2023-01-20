@@ -40,7 +40,7 @@
 				</ul>
 			</template>
 			<template #footer>
-				<NcAppNavigationItem :title="t('diary', 'Export')" icon="icon-download">
+				<NcAppNavigationItem class="export" :title="t('diary', 'Export')" icon="icon-download">
 					<template #actions>
 						<NcActionLink :href="pdfDownloadLink">
 							<template #icon>
@@ -209,6 +209,9 @@ export default {
       flex-grow: 3;
       font-size: 14px;
     }
+  }
+  .export {
+    padding: 12px;
   }
 }
 </style>
