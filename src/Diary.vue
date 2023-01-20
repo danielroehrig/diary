@@ -1,9 +1,8 @@
 <template>
 	<NcContent id="diary-content" app-name="diary">
 		<NcAppNavigation>
-			<div style="display:flex;">
+			<div class="navigation-wrapper">
 				<NcButton class="icon icon-view-previous"
-					style="height: 34px; width: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px"
 					@click="goPrevDay" />
 				<NcDatetimePicker
 					v-model="selectedDate"
@@ -12,13 +11,12 @@
 					:open="calendarOpen"
 					@change="onDateChange" />
 				<NcButton
-					style="flex-grow: 3; height: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px; font-size: 13px"
+					class="open-calendar"
 					@click="openCalendar">
 					{{ formattedDate }}
 				</NcButton>
 				<NcButton v-if="showNextDayButton"
 					class="icon icon-view-next"
-					style="height: 34px; width: 34px; min-height: 0!important; min-width: 0!important; margin: 5px 5px"
 					@click="goNextDay" />
 			</div>
 			<template #list>
@@ -42,7 +40,7 @@
 				</ul>
 			</template>
 			<template #footer>
-				<NcAppNavigationItem :title="t('diary', 'Export')" icon="icon-download">
+				<NcAppNavigationItem class="export" :title="t('diary', 'Export')" icon="icon-download">
 					<template #actions>
 						<NcActionLink :href="pdfDownloadLink">
 							<template #icon>
@@ -61,7 +59,7 @@
 			</template>
 		</NcAppNavigation>
 		<NcAppContent>
-			<Editor id="diary-editor" :date="date" @entry-edit="onEdit" />
+			<Editor :date="date" @entry-edit="onEdit" />
 		</NcAppContent>
 	</NcContent>
 </template>
@@ -191,20 +189,29 @@ export default {
 	},
 }
 </script>
-<style>
+
+<style lang="scss">
 #diary-content {
-	width: 100%;
-	padding-top: 0;
+  margin: 0;
+  height: calc(100% - 50px);
+  width: inherit;
+  .navigation-wrapper {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px;
+    .diary-datetimepicker {
+      width: 0; // Hides drop-down
+      .mx-input-wrapper {
+        display: none;
+      }
+    }
+    .open-calendar {
+      flex-grow: 3;
+      font-size: 14px;
+    }
+  }
+  .export {
+    padding: 12px;
+  }
 }
-
-#diary-editor {
-	width: 100%;
-	max-width: 800px;
-	padding-left: 20px;
-}
-
-.editor-toolbar {
-	border: none;
-}
-
 </style>
