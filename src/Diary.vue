@@ -193,6 +193,8 @@ export default {
 <style lang="scss">
 #diary-content {
   margin: 0;
+  height: calc(100% - 50px);
+  width: 100%;
   .navigation-wrapper {
     display: flex;
     justify-content: space-around;
