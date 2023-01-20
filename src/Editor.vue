@@ -1,5 +1,5 @@
 <template>
-	<div style="position: relative">
+	<div id="diary-editor">
 		<div id="entry-title">
 			<i v-if="isLoading" class="fa fa-spinner fa-spin" />
 			{{ unSavedMarker }}{{ title }}
@@ -9,9 +9,7 @@
 			:configs="configs"
 			preview-class="markdown-body" />
 		<div v-if="isLoading" id="overlay">
-			<div style="margin: auto">
-				<i class="fa fa-spinner fa-spin fa-10x" />
-			</div>
+			<i class="fa fa-spinner fa-spin fa-10x" />
 		</div>
 	</div>
 </template>
@@ -20,7 +18,7 @@ import VueSimplemde from 'vue-simplemde'
 
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import moment from 'nextcloud-moment'
+import moment from '@nextcloud/moment'
 
 export default {
 	name: 'Editor',
@@ -124,67 +122,73 @@ export default {
 	},
 }
 </script>
-<style lang="css">
+
+<style lang="scss">
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 @import '~simplemde/dist/simplemde.min.css';
 @import '~github-markdown-css';
 
-.vue-simplemde {
-	padding-left: 0.5em;
-}
-
-.editor-toolbar a {
-	color: var(--color-main-text) !important;
-}
-
-.editor-preview {
-	background-color: var(--color-main-background);
-	color: var(--color-main-text);
-}
-
-.CodeMirror {
-	background-color: var(--color-main-background);
-	color: var(--color-main-text);
-	border: none;
-}
-
-.CodeMirror, .CodeMirror-scroll {
-	padding-bottom: 50px;
-}
-
-.CodeMirror-cursor {
-	border-color: var(--color-main-text);
-}
-
-.CodeMirror-code {
-	width: unset !important;
-	border: none !important;
-}
-
-.editor-toolbar a.active, .editor-toolbar a:hover {
-	background-color: var(--color-background-hover) !important;
-}
-
-.editor-toolbar.disabled-for-preview a:not(.no-disable) {
-	background-color: var(--color-background-darker) !important;
-	color: var(--color-text-lighter) !important;
-}
-
-#entry-title {
-	padding-left: 1.5em;
-	padding-top: 0.5em;
-	font-weight: bold;
-	font-size: larger;
-}
-
-#overlay {
-	z-index: 99;
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	background: rgba(255, 255, 255, 0.4);
-	display: flex;
+#diary-editor {
+  position: relative;
+  height: 100%;
+  #entry-title {
+    font-weight: 700;
+    font-size: 18px;
+    padding-left: 50px;
+    padding-top: 16px;
+  }
+  .vue-simplemde {
+    padding-left: 32px;
+    max-width: 800px;
+    @media (max-width: 500px) {
+      padding-left: 0;
+    }
+    .CodeMirror {
+      background-color: var(--color-main-background);
+      color: var(--color-main-text);
+      border: none;
+    }
+    .CodeMirror, .CodeMirror-scroll {
+      padding-bottom: 50px;
+    }
+    .CodeMirror-cursor {
+      border-color: var(--color-main-text);
+    }
+    .CodeMirror-code {
+      width: unset !important;
+      border: none !important;
+    }
+    .editor-toolbar {
+      border: none;
+      a {
+        color: var(--color-main-text) !important;
+        &.active, &:hover {
+          background-color: var(--color-background-hover) !important;
+        }
+      }
+      &.disabled-for-preview {
+        a:not(.no-disable) {
+          background-color: var(--color-background-darker) !important;
+          color: var(--color-text-lighter) !important;
+        }
+      }
+    }
+    .editor-preview {
+      background-color: var(--color-main-background);
+      color: var(--color-main-text);
+    }
+  }
+  #overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: hsl(0, 0%, 0%, 0.5);
+  }
 }
 </style>
