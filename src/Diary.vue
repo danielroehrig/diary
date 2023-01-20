@@ -194,7 +194,7 @@ export default {
 #diary-content {
   margin: 0;
   height: calc(100% - 50px);
-  width: 100%;
+  width: inherit;
   .navigation-wrapper {
     display: flex;
     justify-content: space-around;
