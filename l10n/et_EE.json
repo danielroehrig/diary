@@ -1,4 +1,8 @@
 { "translations": {
-    "Export" : "Ekspordi"
+    "Diary" : "Päevik",
+    "Export" : "Ekspordi",
+    "as PDF" : "PDF",
+    "as Markdown" : "Markdown",
+    "Write your entry here" : "Kirjuta sissekanne siia"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
