@@ -27,12 +27,12 @@ class PageControllerTest extends TestCase
         $this->mapper = $this->getMockBuilder(EntryMapper::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)
+        $logger = $this->getMockBuilder(LoggerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
         $this->controller = new PageController(
-            'diary', $request, $this->userId, $this->mapper, $this->logger
+            'diary', $request, $this->userId, $this->mapper, $logger
         );
     }
 
@@ -137,7 +137,7 @@ class PageControllerTest extends TestCase
     private function createMockEntry(string $date, string $userId, string $content): Entry
     {
         $entry = new Entry();
-        $entry->setId($userId.$date);
+        $entry->setId($userId . $date);
         $entry->setUid($userId);
         $entry->setEntryDate($date);
         $entry->setEntryContent($content);
