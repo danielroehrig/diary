@@ -1,12 +1,9 @@
-# Version 0.0.9 - "Just the bare minimum"
+# Version 0.0.10- - "Send help!"
 
-I... have so much else to do. But Nextcloud 25 is out now so... I need to at least make it compatible, right? Right?
-Thanks to @kylecoberly for fixing the CSS for 25 for me.
+Look, I need to learn THREE programming languages at once - NONE of them is PHP - so updates will be scarce.
+Also, if you know like _frontend stuff_ please, please, please help me! I am more than will to implement new features,
+but the frontend kills me.
 
 ### Feature
 
-* Support for Nextcloud 25
-
-### Internal
-
-* Updating some packages
+* Support for Nextcloud 26
