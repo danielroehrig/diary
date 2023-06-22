@@ -10,7 +10,7 @@
     ],
     "config": {
         "platform": {
-            "php": "7.3"
+            "php": "8.0"
         }
     },
     "require": {
@@ -20,6 +20,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.11",
-        "friendsofphp/php-cs-fixer": "3.4"
+        "friendsofphp/php-cs-fixer": "v3.18.0"
     }
 }
