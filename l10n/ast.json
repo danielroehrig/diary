@@ -1,0 +1,10 @@
+{ "translations": {
+    "Diary" : "Diariu",
+    "A simple diary for Nextcloud - Alpha release" : "Un diariu cenciellu pa Nextcloud - versión Alpha",
+    "Keep your diary in your Nextcloud. Write entries for each day in\na Markdown editor. Use the calendar to jump to any date and edit your entries.\n\nWarning! This is a very early alpha release and things are still pretty rough around the edges." : "Caltén el diariu en Nextcloud. Escribi entraes pa cada día nel editor de markdown. Usa'l calendariu pa dir a cualesquier data y editar les entraes.\n\n¡Alvertencia! Esta versión ye mui temprana y pue haber funciones ensin pulir.",
+    "Export" : "Esportar",
+    "as PDF" : "como PDF",
+    "as Markdown" : "como markdown",
+    "Write your entry here" : "Escribi la entrada equí"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
