@@ -8,7 +8,7 @@
 a Markdown editor. Use the calendar to jump to any date and edit your entries.
 
 Warning! This is a very early alpha release and things are still pretty rough around the edges.]]></description>
-    <version>0.0.10</version>
+    <version>0.0.11</version>
     <licence>agpl</licence>
     <author mail="mail@danielroehrig.de" homepage="https://www.a-broad-view.com/">Daniel Röhrig</author>
     <namespace>Diary</namespace>
@@ -19,8 +19,8 @@ Warning! This is a very early alpha release and things are still pretty rough ar
     <repository type="git">https://github.com/danielroehrig/diary.git</repository>
     <screenshot>https://raw.githubusercontent.com/danielroehrig/diary/main/screenshots/01-markdown-editor.png</screenshot>
     <dependencies>
-        <php min-version="7.3" max-version="8.2" />
-        <nextcloud min-version="22" max-version="27"/>
+        <php min-version="8.0" max-version="8.3" />
+        <nextcloud min-version="25" max-version="28"/>
     </dependencies>
     <navigations>
         <navigation>
