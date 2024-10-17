@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Diary" : "Diario",
     "A simple diary for Nextcloud - Alpha release" : "Un diario semplice per Nextcloud - Rilascio alpha",
+    "Keep your diary in your Nextcloud. Write entries for each day in\na Markdown editor. Use the calendar to jump to any date and edit your entries.\n\nWarning! This is a very early alpha release and things are still pretty rough around the edges." : "Tieni il tuo diario nel tuo Nextcloud. Scrivi voci per ogni giorno in un editor Markdown. Usa il calendario per passare a qualsiasi data e modificare le tue voci.\n\nAttenzione! Questa è una versione alpha molto precoce e le cose sono ancora piuttosto grezze.",
     "Export" : "Esporta",
     "as PDF" : "come PDF",
     "as Markdown" : "come Markdown",
