@@ -21,7 +21,7 @@ class Application extends App implements IBootstrap
 
     public function register(IRegistrationContext $context): void
     {
-        include_once __DIR__.'/../../vendor/autoload.php';//TODO Check if this is needed at all
+        include_once __DIR__.'/../../vendor/autoload.php'; // TODO Check if this is needed at all
         $context->registerEventListener(UserDeletedEvent::class, UserDeletedListener::class);
     }
 

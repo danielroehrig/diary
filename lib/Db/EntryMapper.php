@@ -19,13 +19,11 @@ class EntryMapper extends QBMapper
     /**
      * Find the diary entry for the given user or date.
      *
-     * @return mixed|Entity
-     *
      * @throws DoesNotExistException
      * @throws MultipleObjectsReturnedException
      * @throws Exception
      */
-    public function find(string $uid, string $date)
+    public function find(string $uid, string $date): Entity
     {
         $qb = $this->db->getQueryBuilder();
         $qb->select('*')

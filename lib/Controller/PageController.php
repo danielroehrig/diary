@@ -8,6 +8,8 @@ use OCP\AppFramework\Controller;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\DB\Exception;
@@ -18,14 +20,10 @@ use Psr\Log\LoggerInterface;
 class PageController extends Controller
 {
     private $userId;
-    /**
-     * @var EntryMapper
-     */
-    private $mapper;
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+
+    private EntryMapper $mapper;
+
+    private LoggerInterface $logger;
 
     public function __construct($AppName, IRequest $request, $UserId, EntryMapper $mapper, LoggerInterface $logger)
     {
@@ -38,11 +36,12 @@ class PageController extends Controller
     /**
      * CAUTION: the @Stuff turns off security checks; for this page no admin is
      *          required and no CSRF check. If you don't know what CSRF is, read
-     *          it up in the docs or you might create a security hole. This is
+     *          it up in the docs, or you might create a security hole. This is
      *          basically the only required method to add this exemption, don't
      *          add it to any other method if you don't exactly know what it does.
      *
      * @NoAdminRequired
+     *
      * @NoCSRFRequired
      */
     public function index(): TemplateResponse
@@ -52,10 +51,7 @@ class PageController extends Controller
         return new TemplateResponse('diary', 'index');  // templates/index.php
     }
 
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
+    #[NoAdminRequired, NoCSRFRequired]
     public function getEntry(string $date): DataResponse
     {
         try {
@@ -71,9 +67,8 @@ class PageController extends Controller
 
     /**
      * @param int $amount Number of past entries to fetch
-     * @NoAdminRequired
-     * @NoCSRFRequired
      */
+    #[NoAdminRequired, NoCSRFRequired]
     public function getLastEntries(int $amount): DataResponse
     {
         try {
@@ -93,8 +88,8 @@ class PageController extends Controller
     /**
      * @param string $date    ISO date as identifier
      * @param string $content Diary entry to save
-     * @NoAdminRequired
      */
+    #[NoAdminRequired]
     public function updateEntry(string $date, string $content): DataResponse
     {
         if ('' === $content) {

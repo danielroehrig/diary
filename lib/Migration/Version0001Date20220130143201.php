@@ -2,7 +2,6 @@
 
 namespace OCA\Diary\Migration;
 
-use Closure;
 use OCP\DB\ISchemaWrapper;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
@@ -10,13 +9,11 @@ use OCP\Migration\SimpleMigrationStep;
 class Version0001Date20220130143201 extends SimpleMigrationStep
 {
     /**
-     * @param IOutput $output
-     * @param Closure $schemaClosure
-     * @param array $options
      * @return ISchemaWrapper
+     *
      * @throws \Doctrine\DBAL\Schema\SchemaException
      */
-    public function changeSchema(IOutput $output, Closure $schemaClosure, array $options)
+    public function changeSchema(IOutput $output, \Closure $schemaClosure, array $options)
     {
         /** @var ISchemaWrapper $schema */
         $schema = $schemaClosure();
@@ -32,5 +29,4 @@ class Version0001Date20220130143201 extends SimpleMigrationStep
 
         return $schema;
     }
-
 }

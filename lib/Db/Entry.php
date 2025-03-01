@@ -2,13 +2,11 @@
 
 namespace OCA\Diary\Db;
 
-use JsonSerializable;
 use OCP\AppFramework\Db\Entity;
 use ReturnTypeWillChange;
 
-class Entry extends Entity implements JsonSerializable
+class Entry extends Entity implements \JsonSerializable
 {
-
     protected $entryDate;
     protected $uid;
     protected $entryContent;
@@ -21,9 +19,6 @@ class Entry extends Entity implements JsonSerializable
         $this->addType('entryContent', 'string');
     }
 
-    /**
-     * @inheritDoc
-     */
     #[ReturnTypeWillChange]
     public function jsonSerialize()
     {

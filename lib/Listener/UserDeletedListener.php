@@ -13,10 +13,8 @@ use Psr\Log\LoggerInterface;
 
 class UserDeletedListener implements IEventListener
 {
-    /** @var LoggerInterface */
-    private $logger;
-    /** @var EntryMapper */
-    private $mapper;
+    private LoggerInterface $logger;
+    private EntryMapper $mapper;
 
     public function __construct(EntryMapper $mapper, LoggerInterface $logger)
     {

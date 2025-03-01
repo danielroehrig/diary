@@ -5,6 +5,8 @@ namespace OCA\Diary\Controller;
 use OCA\Diary\Db\EntryMapper;
 use OCA\Diary\Service\ConversionService;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\DataDownloadResponse;
 use OCP\DB\Exception;
 use OCP\IRequest;
@@ -15,14 +17,10 @@ use OCP\IRequest;
 class ExportController extends Controller
 {
     private $userId;
-    /**
-     * @var EntryMapper
-     */
-    private $mapper;
-    /**
-     * @var ConversionService
-     */
-    private $exportService;
+
+    private EntryMapper $mapper;
+
+    private ConversionService $exportService;
 
     public function __construct($AppName, IRequest $request, $UserId, EntryMapper $mapper, ConversionService $exportService)
     {
@@ -35,11 +33,9 @@ class ExportController extends Controller
     /**
      * Get all entries as one markdown file.
      *
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     *
      * @throws Exception
      */
+    #[NoAdminRequired, NoCSRFRequired]
     public function getMarkdown(): DataDownloadResponse
     {
         $entries = $this->mapper->findAll($this->userId);
@@ -51,11 +47,9 @@ class ExportController extends Controller
     /**
      * Get all entries as one PDF file.
      *
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     *
      * @throws Exception
      */
+    #[NoAdminRequired, NoCSRFRequired]
     public function getPdf(): DataDownloadResponse
     {
         $entries = $this->mapper->findAll($this->userId);
