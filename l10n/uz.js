@@ -1,6 +1,12 @@
 OC.L10N.register(
     "diary",
     {
-    "Export" : "Eksport"
+    "Diary" : "Kundalik",
+    "A simple diary for Nextcloud - Alpha release" : "Nextcloud uchun oddiy kundalik - Alpha versiyasi",
+    "Keep your diary in your Nextcloud. Write entries for each day in\na Markdown editor. Use the calendar to jump to any date and edit your entries.\n\nWarning! This is a very early alpha release and things are still pretty rough around the edges." : "Kundalikni Nextcloud-da saqlang. Har bir kun uchun yozuvlarni yozing\nMarkdown muharriri. Istalgan sanaga o'tish va yozuvlaringizni tahrirlash uchun taqvimdan foydalaning.\n\nOgohlantirish! Bu juda erta alfa relizi va narsalar hali ham chetda juda qo'pol.",
+    "Export" : "Eksport",
+    "as PDF" : "PDF sifatida",
+    "as Markdown" : "belgilovchi qalam sifatida",
+    "Write your entry here" : "Matnni shu yerga yozing"
 },
 "nplurals=1; plural=0;");
