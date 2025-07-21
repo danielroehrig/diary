@@ -60,13 +60,12 @@ jobs:
           r="${r//'%'/'%25'}"                                                         
           r="${r//$'\n'/'%0A'}"                                                       
           r="${r//$'\r'/'%0D'}"                                                        
-          echo "::set-output name=RELEASE_BODY::$r"
+          echo "RELEASE_BODY=$r" >> $GITHUB_OUTPUT
 
       - name: Upload app tarball to release
         uses: svenstaro/upload-release-action@v2
         id: attach_to_release
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ../server/apps/${{ env.APP_NAME }}/build/artifacts/appstore/${{ env.APP_NAME }}.tar.gz
           asset_name: ${{ env.APP_NAME }}.tar.gz
           tag: ${{ github.ref }}

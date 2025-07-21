@@ -4,14 +4,12 @@
 			<div class="navigation-wrapper">
 				<NcButton class="icon icon-view-previous"
 					@click="goPrevDay" />
-				<NcDatetimePicker
-					v-model="selectedDate"
+				<NcDatetimePicker v-model="selectedDate"
 					class="diary-datetimepicker"
 					type="date"
 					:open="calendarOpen"
 					@change="onDateChange" />
-				<NcButton
-					class="open-calendar"
+				<NcButton class="open-calendar"
 					@click="openCalendar">
 					{{ formattedDate }}
 				</NcButton>
@@ -21,8 +19,7 @@
 			</div>
 			<template #list>
 				<ul>
-					<NcListItem
-						v-for="entry in lastEntries"
+					<NcListItem v-for="entry in lastEntries"
 						:key="entry.date"
 						:title="formatDate(entry.date)"
 						:bold="false"
@@ -192,26 +189,30 @@ export default {
 
 <style lang="scss">
 #diary-content {
-  margin: 0;
-  height: calc(100% - 50px);
-  width: inherit;
-  .navigation-wrapper {
-    display: flex;
-    justify-content: space-around;
-    padding: 12px;
-    .diary-datetimepicker {
-      width: 0; // Hides drop-down
-      .mx-input-wrapper {
-        display: none;
-      }
-    }
-    .open-calendar {
-      flex-grow: 3;
-      font-size: 14px;
-    }
-  }
-  .export {
-    padding: 12px;
-  }
+	margin: 0;
+	height: calc(100% - 50px);
+	width: inherit;
+
+	.navigation-wrapper {
+		display: flex;
+		justify-content: space-around;
+		padding: 12px;
+
+		.diary-datetimepicker {
+			width: 0; // Hides drop-down
+			.mx-input-wrapper {
+				display: none;
+			}
+		}
+
+		.open-calendar {
+			flex-grow: 3;
+			font-size: 14px;
+		}
+	}
+
+	.export {
+		padding: 12px;
+	}
 }
 </style>

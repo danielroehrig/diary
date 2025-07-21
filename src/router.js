@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { generateUrl } from '@nextcloud/router'
 import moment from '@nextcloud/moment'
-import Diary from './Diary'
+import Diary from './Diary.vue'
 
 Vue.use(VueRouter)
 
