@@ -1,8 +1,8 @@
 import '../css/diary.scss'
 
 import Vue from 'vue'
-import App from './App'
-import router from './router'
+import App from './App.vue'
+import router from './router.js'
 
 Vue.config.devtools = (process.env.NODE_ENV === 'development')
 
